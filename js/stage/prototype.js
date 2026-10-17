@@ -139,7 +139,7 @@ export class PrototypeAct {
     needle.traverse((o) => { if (o.isMesh) o.castShadow = true; });
     this.needle = needle;
     this.root.add(needle);
-    const brass = new THREE.Mesh(new THREE.CylinderGeometry(BRASS_R, BRASS_R, BRASS_H, 64), new THREE.MeshStandardMaterial({ color: '#d8ae62', metalness: 1, roughness: 0.3, envMapIntensity: 3 }));
+    const brass = new THREE.Mesh(new THREE.CylinderGeometry(BRASS_R, BRASS_R, BRASS_H, 64), new THREE.MeshStandardMaterial({ color: '#d9ad5f', metalness: 0.75, roughness: 0.32, envMapIntensity: 3 }));
     brass.geometry.translate(0, BRASS_H / 2, 0);
     brass.castShadow = true;
     this.brass = brass;
