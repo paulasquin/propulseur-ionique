@@ -105,7 +105,7 @@ export const EXPERIMENTS = [
       "Aucune pièce du commerce ne répondait au cahier des charges : immerger l'aiguille pour n'en laisser dépasser que la pointe (et maximiser la capillarité, quel que soit son diamètre), accueillir une sonde de conductimètre, un agitateur magnétique, bloquer l'aiguille contre le courant, et entrer sous la cloche.",
       "Conçue sous SolidWorks, la pièce tient dans un cube de 40 mm. Des rainures laissent circuler la solution jusque dans l'aiguille pour homogénéiser sa concentration. Impression : 1 h 40, filmée en timelapse à la GoPro (une image toutes les 5 secondes).",
     ],
-    result: 'Mon premier banc de test imprimé en 3D. Faites-le tourner, puis passez-le aux rayons X.',
+    result: 'Mon premier banc de test imprimé en 3D. Faites-le tourner, passez-le aux rayons X : une inscription se cache sur sa face arrière.',
     viz: { type: 'viewer', model: 'plateforme' },
     media: [
       { src: 'assets/img/plateforme-rendu.webp', caption: 'Rendu SolidWorks de la plateforme', contain: true },

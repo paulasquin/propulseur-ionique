@@ -23,7 +23,7 @@ const XRAY = new THREE.ShaderMaterial({
 });
 
 function sectionMaterial(plane) {
-  const m = new THREE.MeshPhysicalMaterial({ color: '#efe7d6', roughness: 0.55, clearcoat: 0.15, side: THREE.DoubleSide, clippingPlanes: [plane] });
+  const m = new THREE.MeshPhysicalMaterial({ color: '#ddd4c2', roughness: 0.55, clearcoat: 0.15, side: THREE.DoubleSide, clippingPlanes: [plane] });
   m.onBeforeCompile = (sh) => {
     sh.fragmentShader = sh.fragmentShader.replace('#include <color_fragment>', '#include <color_fragment>\nif (!gl_FrontFacing) diffuseColor.rgb = vec3(1.0, 0.42, 0.2);');
   };
@@ -49,15 +49,15 @@ export function createViewer(container, { models, label }) {
     renderer.localClippingEnabled = true;
     scene = new THREE.Scene();
     scene.environment = studioEnvironment(renderer);
-    scene.environmentIntensity = 0.9;
+    scene.environmentIntensity = 0.45;
     camera = new THREE.PerspectiveCamera(30, 1, 1, 2000);
     scene.add(new THREE.HemisphereLight('#cfe0ff', '#10131c', 0.8));
-    const key = new THREE.DirectionalLight('#ffffff', 2.2);
+    const key = new THREE.DirectionalLight('#ffffff', 1.7);
     key.position.set(1, 2, 1.4);
     scene.add(key);
     plane = new THREE.Plane(new THREE.Vector3(-1, 0, 0), 0);
     mats = {
-      solid: new THREE.MeshPhysicalMaterial({ color: '#efe7d6', roughness: 0.55, clearcoat: 0.15, sheen: 0.3, sheenColor: new THREE.Color('#fff4e0') }),
+      solid: new THREE.MeshPhysicalMaterial({ color: '#ddd4c2', roughness: 0.55, clearcoat: 0.15, sheen: 0.3, sheenColor: new THREE.Color('#fff4e0') }),
       xray: XRAY,
       cut: sectionMaterial(plane),
     };
@@ -79,7 +79,7 @@ export function createViewer(container, { models, label }) {
     edges.position.copy(meshes[0].position);
     group.add(edges);
     group.userData.edges = edges;
-    camera.position.set(size * 1.6, size * 1.25, size * 2.1);
+    camera.position.set(size * 2.0, size * 1.5, size * 2.6);
     controls = new OrbitControls(camera, canvas);
     controls.enableZoom = false;
     controls.enablePan = false;
