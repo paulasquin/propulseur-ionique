@@ -2,7 +2,7 @@
 
 Static site (GitHub Pages) presenting my 2014-2016 *classe préparatoire* TIPE project: designing, 3D-printing and measuring a small gridded electrostatic ion thruster under a high-school vacuum bell jar. Content is in French and comes from the original blog, [propulseur-ionique.blogspot.com](https://propulseur-ionique.blogspot.com).
 
-Live at https://propulseur-ionique.paulasquin.com.
+Live at https://ionic.paulasquin.com.
 
 ## Structure
 
