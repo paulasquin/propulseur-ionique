@@ -62,7 +62,12 @@ export class Stage {
     this.composer.addPass(this.finish);
 
     this.resize();
-    addEventListener('resize', () => this.resize());
+    addEventListener('resize', () => {
+      // Ignore the mobile URL bar showing or hiding: only real size changes reallocate buffers.
+      const { w, h } = this.size();
+      if (w === this.lastW && Math.abs(h - this.lastH) < 150) return;
+      this.resize();
+    });
     this.loop = this.loop.bind(this);
     requestAnimationFrame(this.loop);
   }
@@ -76,6 +81,7 @@ export class Stage {
 
   resize() {
     const { w, h } = this.size();
+    this.lastW = w; this.lastH = h;
     this.renderer.setPixelRatio(this.pixelRatio());
     this.renderer.setSize(w, h, false);
     this.composer.setPixelRatio(this.pixelRatio());
@@ -111,8 +117,7 @@ export class Stage {
     const now = performance.now();
     const dt = Math.min((now - this.last) / 1000, 0.05);
     this.last = now;
-    if (!this.active || (!this.visible && this.canvas.style.opacity === '0')) return;
-    if (document.hidden) return;
+    if (!this.active || document.hidden) return;
     this.time += dt;
     const act = this.active;
     act.update(dt, this.time);

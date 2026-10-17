@@ -390,7 +390,9 @@ export class OrbitAct {
     this.fill.target.position.copy(this.satPivot.position);
 
     this.updateSun();
-    document.getElementById('hud-thr').textContent = thrust > 0.5 ? 'ON · 22 kV' : 'IGNITION';
+    this.hud ??= document.getElementById('hud-thr');
+    const label = thrust > 0.5 ? 'ON · 22 kV' : 'IGNITION';
+    if (this.hud && this.hud.textContent !== label) this.hud.textContent = label;
   }
 
   updateSun() {

@@ -87,10 +87,6 @@ export class PrototypeAct {
     const rim = new THREE.DirectionalLight('#7fc8ff', 1.1);
     rim.position.set(-20, 12, -18);
     s.add(rim);
-    const warm = new THREE.PointLight('#ffb27a', 0, 30, 1.6);
-    warm.position.set(0, 18, 0);
-    s.add(warm);
-    this.warm = warm;
 
     this.root = new THREE.Group();
     s.add(this.root);
@@ -300,7 +296,7 @@ export class PrototypeAct {
     this.pied.scale.setScalar(MM * scl);
 
     // Spin: slow presentation turn, then thrust-driven rotation and the measured replay.
-    const ignite = smooth(0.1, 0.5, ph(4)) * (p < 6 * P ? 1 : 1);
+    const ignite = smooth(0.1, 0.5, ph(4));
     let omega = 0.18 * (1 - smooth(0.3, 0.9, ph(4)));
     const meas = smooth(0.05, 0.95, ph(6));
     if (p > 4 * P) omega += ignite * 0.55;
@@ -317,7 +313,6 @@ export class PrototypeAct {
     this.croix.rotation.y = this.angle;
     this.plumes.forEach((pl) => { pl.userData.setIntensity(ignite * (1.9 + 0.2 * Math.sin(t * 17))); pl.userData.update(t); });
     this.arrows.forEach((ar) => ar.scale.setScalar(Math.max(0.001, smooth(0.25, 0.6, ph(4)) * (1 - smooth(0.2, 0.6, ph(5))))));
-    this.warm.intensity = ignite * 0;
 
     // Bell jar descends and the pump pulls the pressure down.
     const jar = smooth(0.05, 0.55, ph(5)) + (p >= 6 * P ? 1 : 0);

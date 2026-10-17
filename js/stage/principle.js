@@ -399,8 +399,10 @@ export class PrincipleAct {
     show('beam', 0.8, 1.01);
     show('thrust', 0.84, 1.01);
     this.labels.update(this.camera, innerWidth, innerHeight);
-    this.lab.accel.el.querySelector('.s-text').textContent = `Grille d'accélération · ${gridPositive ? '+' : '−'}${this.kV.toFixed(0)} kV`;
-    this.lab.beam.el.querySelector('.s-text').textContent = `Faisceau de ${ion.name} · ${Math.round(ve / 1000)} km/s`;
+    const accelText = `Grille d'accélération · ${gridPositive ? '+' : '−'}${this.kV.toFixed(0)} kV`;
+    const beamText = `Faisceau de ${ion.name} · ${Math.round(ve / 1000)} km/s`;
+    if (accelText !== this.accelText) { this.accelText = accelText; this.lab.accel.el.querySelector('.s-text').textContent = accelText; }
+    if (beamText !== this.beamText) { this.beamText = beamText; this.lab.beam.el.querySelector('.s-text').textContent = beamText; }
   }
 
   stepIons(dt, vis, color, on) {

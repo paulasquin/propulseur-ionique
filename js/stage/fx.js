@@ -11,6 +11,7 @@ export const QUALITY = (() => {
     const ext = gl && gl.getExtension('WEBGL_debug_renderer_info');
     const r = ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : '';
     if (/SwiftShader|llvmpipe|Software/i.test(r)) tier = 0.5;
+    gl?.getExtension('WEBGL_lose_context')?.loseContext();
   } catch (e) { /* ignore */ }
   return { tier, mobile, particles: tier >= 2 ? 1 : tier >= 1.5 ? 0.7 : tier >= 1 ? 0.5 : 0.3 };
 })();

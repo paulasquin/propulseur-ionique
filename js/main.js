@@ -11,6 +11,7 @@ const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const nf = (v, d = 0) => v.toLocaleString('fr-FR', { minimumFractionDigits: d, maximumFractionDigits: d });
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
+ScrollTrigger.config({ ignoreMobileResize: true });
 document.body.classList.add('is-loading');
 
 /* ---------------- smooth scroll ---------------- */
