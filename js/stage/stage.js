@@ -41,6 +41,10 @@ export class Stage {
     this.visible = false;
     this.last = performance.now();
     this.time = 0;
+    // Dynamic resolution: scale (0.5-1) applied on top of the device pixel ratio cap.
+    this.scale = 1;
+    this.perf = { frames: 0, elapsed: 0, good: 0, fps: 0, gpuMs: 0 };
+    this.debug = location.search.includes('debug');
 
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance', alpha: false });
     renderer.setPixelRatio(this.pixelRatio());
@@ -74,7 +78,38 @@ export class Stage {
 
   pixelRatio() {
     const cap = QUALITY.tier >= 2 ? 1.75 : QUALITY.tier >= 1.5 ? 1.5 : QUALITY.tier >= 1 ? 1.25 : 0.75;
-    return Math.min(devicePixelRatio || 1, cap);
+    return Math.min(devicePixelRatio || 1, cap) * (this.scale ?? 1);
+  }
+
+  /**
+   * Lower the rendering resolution when frames take too long, raise it back when
+   * there is headroom. Evaluated every 1.5 s of active rendering.
+   */
+  adapt(rawDt) {
+    const P = this.perf;
+    P.frames++;
+    P.elapsed += rawDt;
+    if (P.elapsed < 1.5) return;
+    P.fps = P.frames / P.elapsed;
+    P.frames = 0;
+    P.elapsed = 0;
+    let next = this.scale;
+    if (P.fps < 45) { next = Math.max(0.5, this.scale * (P.fps < 30 ? 0.75 : 0.87)); P.good = 0; }
+    else if (P.fps > 56 && this.scale < 1) { P.good++; if (P.good >= 3) { next = Math.min(1, this.scale * 1.1); P.good = 0; } }
+    if (Math.abs(next - this.scale) > 0.01) {
+      this.scale = next;
+      this.applyPixelRatio();
+    }
+  }
+
+  applyPixelRatio() {
+    const { w, h } = this.size();
+    this.renderer.setPixelRatio(this.pixelRatio());
+    this.renderer.setSize(w, h, false);
+    this.composer.setPixelRatio(this.pixelRatio());
+    this.composer.setSize(w, h);
+    const bloomScale = QUALITY.tier >= 1.5 ? 0.5 : 0.35;
+    this.bloom.setSize(w * bloomScale * this.scale, h * bloomScale * this.scale);
   }
 
   size() { return { w: innerWidth, h: innerHeight }; }
@@ -82,12 +117,7 @@ export class Stage {
   resize() {
     const { w, h } = this.size();
     this.lastW = w; this.lastH = h;
-    this.renderer.setPixelRatio(this.pixelRatio());
-    this.renderer.setSize(w, h, false);
-    this.composer.setPixelRatio(this.pixelRatio());
-    this.composer.setSize(w, h);
-    const bloomScale = QUALITY.tier >= 1.5 ? 0.5 : 0.35;
-    this.bloom.setSize(w * bloomScale, h * bloomScale);
+    this.applyPixelRatio();
     this.finish.uniforms.uRes.value.set(w, h);
     for (const act of this.acts.values()) act.resize?.(w, h);
   }
@@ -108,6 +138,33 @@ export class Stage {
     next?.enter?.();
     this.visible = !!next;
     this.canvas.classList.toggle('on', this.visible);
+    // Skip the first second after a switch (shader warm-up) in the frame-rate budget.
+    this.perf.frames = 0;
+    this.perf.elapsed = -1;
+  }
+
+  // Debug only: GPU time per frame through EXT_disjoint_timer_query_webgl2.
+  gpuBegin() {
+    const gl = this.renderer.getContext();
+    this.tq ??= gl.getExtension('EXT_disjoint_timer_query_webgl2') || false;
+    if (!this.tq || this.query) return;
+    this.query = gl.createQuery();
+    gl.beginQuery(this.tq.TIME_ELAPSED_EXT, this.query);
+    this.queryOpen = true;
+  }
+
+  gpuEnd() {
+    const gl = this.renderer.getContext();
+    if (!this.tq || !this.query) return;
+    if (this.queryOpen) { gl.endQuery(this.tq.TIME_ELAPSED_EXT); this.queryOpen = false; return; }
+    if (gl.getQueryParameter(this.query, gl.QUERY_RESULT_AVAILABLE)) {
+      if (!gl.getParameter(this.tq.GPU_DISJOINT_EXT)) {
+        const ms = gl.getQueryParameter(this.query, gl.QUERY_RESULT) / 1e6;
+        this.perf.gpuMs = this.perf.gpuMs ? this.perf.gpuMs * 0.9 + ms * 0.1 : ms;
+      }
+      gl.deleteQuery(this.query);
+      this.query = null;
+    }
   }
 
   setProgress(name, p) { this.acts.get(name)?.setProgress?.(p); }
@@ -115,9 +172,11 @@ export class Stage {
   loop() {
     requestAnimationFrame(this.loop);
     const now = performance.now();
-    const dt = Math.min((now - this.last) / 1000, 0.05);
+    const rawDt = (now - this.last) / 1000;
+    const dt = Math.min(rawDt, 0.05);
     this.last = now;
     if (!this.active || document.hidden) return;
+    if (rawDt < 0.5) this.adapt(rawDt);
     this.time += dt;
     const act = this.active;
     act.update(dt, this.time);
@@ -133,7 +192,9 @@ export class Stage {
     f.uFade.value = look.fade ?? 0;
     f.uFadeColor.value.set(look.fadeColor ?? '#000000');
     f.uVignette.value = look.vignette ?? 0.9;
+    if (this.debug) this.gpuBegin();
     this.composer.render(dt);
+    if (this.debug) this.gpuEnd();
     act.afterRender?.();
   }
 }

@@ -180,7 +180,8 @@ export function createPlume({
         float r = (uRadius * 0.8 + z * uSpread * 0.85) * sqrt(aSeed.w);
         vec3 p = vec3(cos(ang) * r, sin(ang) * r, z);
         vec4 mv = modelViewMatrix * vec4(p, 1.0);
-        gl_PointSize = uSize * uPR * (1.1 - life * 0.7) / max(0.2, -mv.z);
+        // Clamp the sprite size: big additive sprites near the camera are a fill-rate trap on phones.
+        gl_PointSize = min(uSize * uPR * (1.1 - life * 0.7) / max(0.2, -mv.z), 40.0 * uPR);
         vLife = life; vSeed = aSeed.y;
         gl_Position = projectionMatrix * mv;
       }`,
