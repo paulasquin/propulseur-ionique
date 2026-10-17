@@ -7,7 +7,7 @@ export const EXPERIMENTS_EN = {
     question: 'Can an ordinary battery power the thruster under a bell jar without swelling or heating up?',
     body: [
       'The thrust of an ion thruster is so weak, and air such a good insulator, that everything has to happen under a vacuum bell jar. An external power supply would have required stiff cables that would have braked the structure: the energy source had to be on board.',
-      'Unable to find any record of a battery tested in a vacuum, I tried it myself: the battery alone under the bell jar, connected to a rotary vane pump, stepping down from 800 to 600 and 300 mbar, then to just a few millibars. After each step I checked its temperature, since any heating would have revealed an abnormal chemical reaction.',
+      'Unable to find any record of a battery tested in a vacuum, I tried it myself: the battery alone under the bell jar, with the rotary vane pump bringing the pressure down in steps — 800, 600, 300 mbar, then just a few millibars. After each step I checked its temperature, since any heating would have revealed an abnormal chemical reaction.',
     ],
     result: 'No swelling, no heating: the battery remained perfectly stable. The on-board power source was validated.',
     limit: 'Voltage and behaviour under load were not measured during this quick first test.',
@@ -33,7 +33,7 @@ export const EXPERIMENTS_EN = {
       'To estimate the mass of salt ejected, the idea was to measure the conductivity of the salt water before and after running the thruster. That first required knowing how conductivity relates to concentration.',
       'Dissolving 20.001 g of salt in 50 mL of distilled water gives a saturated solution. I then added distilled water from a burette, recording the conductivity at 25 °C with a calibrated conductivity meter.',
     ],
-    result: 'A saturation plateau, unstable readings between 350 and 250 g/L, then an almost linear trend: 0.039 S/m per g/L. Work would have to stay below 250 g/L.',
+    result: 'A saturation plateau, unstable readings between 350 and 250 g/L, then an almost linear trend: 0.039 S/m per g/L. Concentrations would have to stay below 250 g/L.',
     captions: [],
   },
   ebullition: {
@@ -41,7 +41,7 @@ export const EXPERIMENTS_EN = {
     title: 'A solution in a vacuum',
     question: 'What happens to the ionic liquid when the pressure collapses?',
     body: [
-      'The capillary tubes that carry the liquid up to the grids cannot tolerate bubbles. Yet a liquid placed in a vacuum starts to boil as all its dissolved gas escapes.',
+      'The capillary tubes that carry the liquid up to the grids cannot tolerate bubbles. Yet a liquid placed in a vacuum starts to boil, and its dissolved gas escapes.',
       'As soon as the pump starts, the water boils: first a few fine bubbles, then larger and larger ones, until a genuine cloud of vapour forms. The effect subsides after a few tens of seconds and the water temperature drops. On a second pump-down, not a single bubble appears.',
     ],
     result: 'The propellant must be degassed under the bell jar before being loaded into the structure.',
@@ -66,7 +66,7 @@ export const EXPERIMENTS_EN = {
       'No off-the-shelf part met the requirements: immerse the needle so that only its tip protrudes (maximising capillary rise, whatever its diameter), accommodate a conductivity probe and a magnetic stirrer, hold the needle against the current, and fit under the bell jar.',
       'Designed in SolidWorks, the part fits within a 40 mm cube. Grooves let the solution flow into the needle to keep its concentration uniform. Printing took 1 h 40, filmed as a time-lapse with a GoPro (one frame every 5 seconds).',
     ],
-    result: 'My first 3D-printed test bench. Rotate it and switch to X-ray mode: an inscription is engraved on its back face.',
+    result: 'My first 3D-printed test bench. Rotate it and switch to X-ray mode: an inscription is hidden on its back face.',
     captions: ['SolidWorks rendering of the platform', 'Top view: the probe port on the left, the needle on the right', 'The needle clamp and its grooves', 'The printed part with the needle in place'],
   },
   extraction: {
@@ -77,7 +77,7 @@ export const EXPERIMENTS_EN = {
       'The first major experiment: apply +5,000 V to the salt-water meniscus at the tip of the needle for 30 minutes. Without alternating the polarity, only chloride ions (Cl⁻) could be extracted.',
       'The conductivity first decreased, as if a few milligrams of ions had left the solution… before shooting back up. Either the conductivity meter lacked precision, or the solution, charged by the extraction of ions of a single sign, skewed the measurement. Repeated a few days later, the experiment gave equally inconsistent values.',
     ],
-    result: 'No conclusive result, but valuable lessons: the solution regains gas as soon as the bell jar is opened, degassing sprays salt water everywhere, and the bell jar is too narrow for a support stand.',
+    result: 'No conclusive result, but valuable lessons: the solution reabsorbs gas as soon as the bell jar is opened, degassing sprays salt water everywhere, and the bell jar is too narrow for a support stand.',
     captions: ['The setup on the base of the bell jar'],
   },
   gel: {
@@ -85,7 +85,7 @@ export const EXPERIMENTS_EN = {
     title: 'The ionic gel',
     question: 'How do you stop a liquid from boiling in a vacuum?',
     body: [
-      'The answer came from a childhood memory of the Fête de la Science in Lyon: the super-absorbent crystals found in disposable nappies. This sodium polyacrylate is also used to retain water around the roots of plants.',
+      'The answer came from a memory of the Fête de la Science in Lyon: the super-absorbent crystals found in disposable nappies. This sodium polyacrylate is also used to retain water around the roots of plants.',
       'As my school had none in stock, I extracted it directly from nappies. It absorbs salt water less well than pure water, but more than enough. And the powder can be recovered much like baking meringues: in an oven at 50 °C with the door ajar.',
     ],
     result: 'In a vacuum, the gel stays moist and perfectly calm: no boiling at all. It lets the salt water seep to the surface, where the ions can be accelerated.',
@@ -100,14 +100,14 @@ export const EXPERIMENTS_EN = {
       'To make the structure balance by itself, its centre of gravity sits below the contact point. Finally, a base deflects the airflow inside the bell jar and holds the mast and needle in a circular groove.',
     ],
     result: 'The original 3D model, exactly as I drew it in SolidWorks.',
-    captions: ['Thruster #2.1', 'Wireframe view', 'View from below', 'The base', 'Printed, wired, batteries in place', 'The needle on its brass weight'],
+    captions: ['Thruster #2.1', 'See-through view', 'View from below', 'The base', 'Printed, wired, batteries in place', 'The needle on its brass weight'],
   },
   frottements: {
     date: '14 October 2015', year: 'Year 2',
     title: 'Rotational dynamics: Crookes versus Supermag',
     question: 'Which pivot slows the structure down the least?',
     body: [
-      'To characterise friction, I spin the structure and time every revolution. The decay of the rotation frequency, combined with the moment of inertia given by SolidWorks, yields the friction torque, which I then processed with a Python program.',
+      'To characterise friction, I spin the structure and time every revolution. The decay of the rotation frequency, combined with the moment of inertia given by SolidWorks, yields the friction torque; the readings are then processed with a Python program.',
       'In a vacuum, the result is puzzling: friction appears dry at high speed and viscous at low speed. Then, with the thrusters running for 52 minutes, the camera records a rotation of 4°… in the wrong direction, most likely due to vibrations. The thrust is too weak to overcome static friction.',
     ],
     result: 'The Supermag pivot has a third of the friction, but I kept the glass-on-needle contact: same order of magnitude, and far more compact, since the bell jar is too small for a support stand.',
@@ -158,7 +158,7 @@ export const MISSIONS_EN = [
   'First gridded ion engine used as the main propulsion of a probe (NSTAR, running on xenon).',
   'Reached the Moon using a French Hall-effect thruster, the PPS-1350.',
   'Microwave ion engines, and samples returned from asteroid Itokawa in 2010.',
-  'First spacecraft to orbit two different bodies: Vesta, then Ceres.',
+  'First spacecraft to orbit two extraterrestrial bodies: Vesta, then Ceres.',
   'An ion engine continuously compensated for atmospheric drag at very low altitude.',
   'Colloid micro-thrusters producing a few micronewtons: the same order of magnitude as my prototype.',
   'Four T6 ion engines to reach Mercury.',
