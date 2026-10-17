@@ -182,7 +182,7 @@ export class PrototypeAct {
 
   init(renderer) {
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.shadowMap.type = THREE.PCFShadowMap;
     this.scene.environment = studioEnvironment(renderer);
     this.scene.environmentIntensity = 0.32;
   }

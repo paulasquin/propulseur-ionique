@@ -342,7 +342,7 @@ export class PrincipleAct {
     const on = smooth(0.08, 0.3, p) * smooth(0, 1.2, this.enterTime);
     this.gridMats.forEach(({ mat, ring }, i) => {
       mat.emissive.lerp(gridCol, 0.12);
-      mat.emissiveIntensity = on * (i ? 0.12 : 0.05);
+      mat.emissiveIntensity = on * (i ? 0.05 : 0.02);
       ring.material.color.lerp(gridCol, 0.12);
       ring.material.opacity = on * (i ? 0.9 : 0.4);
     });
