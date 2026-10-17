@@ -8,7 +8,9 @@ import { LANG, nf, t, applyStatic } from './i18n.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const capture = location.search.includes('capture');
+if (capture) document.documentElement.classList.add('capture');
+const reduced = capture || matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 ScrollTrigger.config({ ignoreMobileResize: true });
@@ -414,7 +416,7 @@ async function boot() {
   setupPanels();
   setupReveals();
   if (stageBundle) bindActs(stageBundle);
-  if (location.search.includes('debug')) window.__ionic = stageBundle;
+  if (location.search.includes('debug') || capture) window.__ionic = stageBundle;
   ScrollTrigger.refresh();
 
   await new Promise((r) => setTimeout(r, 350));

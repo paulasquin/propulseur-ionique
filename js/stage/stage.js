@@ -78,6 +78,7 @@ export class Stage {
 
   pixelRatio() {
     const cap = QUALITY.tier >= 2 ? 1.75 : QUALITY.tier >= 1.5 ? 1.5 : QUALITY.tier >= 1 ? 1.25 : 0.75;
+    if (QUALITY.capture) return devicePixelRatio || 1;
     return Math.min(devicePixelRatio || 1, cap) * (this.scale ?? 1);
   }
 
@@ -86,6 +87,7 @@ export class Stage {
    * there is headroom. Evaluated every 1.5 s of active rendering.
    */
   adapt(rawDt) {
+    if (QUALITY.capture) return;
     const P = this.perf;
     P.frames++;
     P.elapsed += rawDt;

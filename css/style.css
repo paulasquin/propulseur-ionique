@@ -422,6 +422,10 @@ blockquote { margin: 0 0 20px; font-family: var(--f-display); font-weight: 300; 
 .lb-prev { left: 18px; top: 50%; transform: translateY(-50%); }
 .lb-next { right: 18px; top: 50%; transform: translateY(-50%); }
 
+/* ?capture: video capture of the 3D stage only */
+.capture main, .capture .topnav, .capture .footer, .capture .grain, .capture .scroll-progress, .capture .stage-labels { visibility: hidden !important; }
+.capture .stage { opacity: 1 !important; transition: none; }
+
 /* reveal helpers */
 .reveal { opacity: 0; transform: translateY(30px); }
 

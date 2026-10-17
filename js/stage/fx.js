@@ -3,6 +3,8 @@
 import * as THREE from 'three';
 
 export const QUALITY = (() => {
+  // ?capture: offline video capture, always full quality.
+  if (location.search.includes('capture')) return { tier: 2, mobile: false, particles: 1, capture: true };
   const mobile = matchMedia('(max-width: 860px)').matches || /Mobi|Android/i.test(navigator.userAgent);
   const cores = navigator.hardwareConcurrency || 4;
   let tier = mobile ? 1 : cores <= 4 ? 1.5 : 2;
