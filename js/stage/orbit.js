@@ -337,6 +337,7 @@ export class OrbitAct {
     this.camera.fov = w < h ? 50 : 36;
     this.camera.updateProjectionMatrix();
     this.w = w; this.h = h;
+    this.portrait = w < h;
   }
 
   setProgress(p) { this.progress = p; }
@@ -359,7 +360,8 @@ export class OrbitAct {
     const ign = smooth(0.62, 0.8, it);
     const flicker = ign < 1 ? (Math.sin(t * 60) > 0.2 ? 1 : 0.35) : 1;
     const thrust = ign * flicker * (0.92 + 0.08 * Math.sin(t * 13));
-    this.plume.userData.setIntensity(thrust * (1.7 + p * 0.3));
+    // In portrait the plume fills much more of the narrow frame: tone it down.
+    this.plume.userData.setIntensity(thrust * (1.7 + p * 0.3) * (this.portrait ? 0.6 : 1));
     this.plume.userData.update(t);
     this.cs.gridMat.emissiveIntensity = thrust * 2.2;
     this.thrLight.intensity = thrust * 1.2;
