@@ -129,7 +129,7 @@ export class PrincipleAct {
         }
         void main() {
           vec3 v = normalize(cameraPosition - vW);
-          float fres = pow(1.0 - abs(dot(normalize(vN), v)), 2.0);
+          float fres = pow(max(1.0 - abs(dot(normalize(vN), v)), 0.0), 2.0);
           float n = noise(vP * 3.0 + vec3(0.0, uTime * 0.25, 0.0)) * 0.6 + noise(vP * 9.0 - uTime * 0.4) * 0.4;
           vec3 deep = vec3(0.01, 0.07, 0.08), bright = vec3(0.2, 0.75, 0.62);
           vec3 col = mix(deep, bright, n * 0.45 + fres * 0.5);

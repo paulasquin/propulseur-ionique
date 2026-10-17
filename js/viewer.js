@@ -17,7 +17,7 @@ const XRAY = new THREE.ShaderMaterial({
   fragmentShader: /* glsl */`
     uniform vec3 uColor; varying vec3 vN; varying vec3 vV;
     void main() {
-      float f = pow(1.0 - abs(dot(normalize(vN), normalize(vV))), 2.2);
+      float f = pow(max(1.0 - abs(dot(normalize(vN), normalize(vV))), 0.0), 2.2);
       gl_FragColor = vec4(uColor * (0.06 + f * 1.1), 0.08 + f * 0.6);
     }`,
   transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide,

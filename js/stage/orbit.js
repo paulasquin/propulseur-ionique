@@ -47,7 +47,7 @@ export function earthMaterial(tex, { sunDir = SUN_DIR, nightBoost = 1 } = {}) {
         vec3 nightCol = lights * (1.0 - cloud * 0.85) + vec3(0.004, 0.008, 0.016) + cloud * vec3(0.012, 0.016, 0.028);
         vec3 col = mix(nightCol, dayCol, lit);
         // Terminator warmth and atmospheric rim.
-        float term = exp(-pow(ndl * 6.0, 2.0));
+        float term = exp(-(ndl * 6.0) * (ndl * 6.0));
         col += vec3(1.0, 0.38, 0.12) * term * 0.05 * (1.0 - cloud * 0.5);
         float fres = pow(1.0 - max(dot(n, v), 0.0), 3.2);
         vec3 atm = mix(vec3(0.25, 0.5, 1.0), vec3(1.0, 0.5, 0.2), pow(max(dot(-v, uSun), 0.0), 14.0));
