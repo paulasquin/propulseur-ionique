@@ -23,6 +23,8 @@ An inline script in `<head>` picks the language before first paint: `?lang=fr|en
 - `assets/models/*.glb` — the original STL exports, converted and meshopt-compressed.
 - `tools/` — scripts that rebuilt the assets from the source files (Drive STL/CSV exports, blog images, NASA textures).
 
+The reusable parts (stage, effects, page orchestration, i18n, charts, viewer, tests, video pipeline) were extracted into the private template [paulasquin/showcase-kit](https://github.com/paulasquin/showcase-kit).
+
 Libraries are loaded from jsDelivr (three.js 0.186 via an import map, GSAP 3.15, Lenis); there is no build step.
 
 ## Local preview
