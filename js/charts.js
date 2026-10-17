@@ -101,7 +101,7 @@ export function createChart(container, key) {
   tip.className = 'tip';
   container.appendChild(tip);
   const cursor = el('line', { class: 'cursor', y1: m.t, y2: H - m.b, x1: -10, x2: -10 }, svg);
-  const marker = el('circle', { r: 5, fill: 'none', stroke: '#fff', 'stroke-width': 1.5, cx: -10, cy: -10 }, svg);
+  const marker = el('circle', { r: 5, fill: 'none', stroke: '#fff', 'stroke-width': 1.5, cx: -10, cy: -10, opacity: 0 }, svg);
   let reveal = 0;
   svg.addEventListener('pointermove', (e) => {
     const r = svg.getBoundingClientRect();
@@ -112,7 +112,8 @@ export function createChart(container, key) {
       const dx = sx(x) - px, dy = sy(y) - py, d = dx * dx + dy * dy * 0.6;
       if (sx(x) <= m.l + iw * reveal + 1 && (!best || d < best.d)) best = { d, x, y, s };
     }));
-    if (!best || best.d > 2500) { tip.style.opacity = 0; marker.setAttribute('cx', -10); cursor.setAttribute('x1', -10); cursor.setAttribute('x2', -10); return; }
+    if (!best || best.d > 2500) { tip.style.opacity = 0; marker.setAttribute('opacity', 0); cursor.setAttribute('x1', -10); cursor.setAttribute('x2', -10); return; }
+    marker.setAttribute('opacity', 1);
     cursor.setAttribute('x1', sx(best.x)); cursor.setAttribute('x2', sx(best.x));
     marker.setAttribute('cx', sx(best.x)); marker.setAttribute('cy', sy(best.y));
     marker.setAttribute('stroke', best.s.color);
@@ -121,7 +122,7 @@ export function createChart(container, key) {
     tip.style.top = `${(sy(best.y) / H) * 100}%`;
     tip.style.opacity = 1;
   });
-  svg.addEventListener('pointerleave', () => { tip.style.opacity = 0; });
+  svg.addEventListener('pointerleave', () => { tip.style.opacity = 0; marker.setAttribute('opacity', 0); });
 
   const api = {
     setReveal(f) {

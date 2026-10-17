@@ -133,31 +133,25 @@ export function cascadeMini(container) {
       <filter id="cw-glow"><feGaussianBlur stdDeviation="2.5"/></filter>
     </defs>
     <g fill="none" stroke="#5d6b88" stroke-width="1.6">
-      <path d="M60 80 H96 M104 80 H170 H178 M186 80 H330" />
-      <path d="M60 230 H176 M184 230 H250 H256 M264 230 H410" />
-      <path d="M60 80 V140 M60 170 V230" />
-      <path id="d1" d="M120 230 L170 80" /><path id="d2" d="M170 80 L250 230" /><path id="d3" d="M250 230 L330 80" /><path id="d4" d="M330 80 L410 230" />
+      <path d="M60 80 H116 M124 80 H256 M264 80 H340" />
+      <path d="M60 230 H176 M184 230 H336 M344 230 H420" />
+      <path d="M60 80 V138 M60 172 V230" />
+      <path id="d1" d="M100 230 L180 80" /><path id="d2" d="M180 80 L260 230" /><path id="d3" d="M260 230 L340 80" /><path id="d4" d="M340 80 L420 230" />
+      <path d="M48 244 H72 M53 250 H67 M58 256 H62" />
     </g>
-    <g stroke="#b4bfd3" stroke-width="3">
-      <path d="M96 66 V94 M104 66 V94" /><path d="M176 216 V244 M184 216 V244" /><path d="M256 216 V244 M264 216 V244" />
-      <path d="M296 66 V94 M304 66 V94" />
-    </g>
-    <path d="M298 80 H302" stroke="#03050b" stroke-width="6"/>
-    <g fill="#74f2c4">
-      <path d="M140 167 l12 -4 l-2 13 z" transform="rotate(-18 145 170)" /><path d="M206 150 l12 4 l-10 9 z" />
-      <path d="M286 167 l12 -4 l-2 13 z" transform="rotate(-18 291 170)" /><path d="M366 150 l12 4 l-10 9 z" />
-    </g>
-    <circle cx="60" cy="155" r="15" fill="#060a15" stroke="#6fd6ff" stroke-width="1.6"/>
+    <path d="M116 66 V94 M124 66 V94" stroke="#b4bfd3" stroke-width="3"/><path d="M256 66 V94 M264 66 V94" stroke="#b4bfd3" stroke-width="3"/><path d="M176 216 V244 M184 216 V244" stroke="#b4bfd3" stroke-width="3"/><path d="M336 216 V244 M344 216 V244" stroke="#b4bfd3" stroke-width="3"/>
+    <g transform="translate(140.0 155.0) rotate(-61.9)"><path d="M-8 -8 L-8 8 L6 0 Z" fill="#74f2c4"/><path d="M6 -8 V8" stroke="#74f2c4" stroke-width="2.2"/></g><g transform="translate(220.0 155.0) rotate(61.9)"><path d="M-8 -8 L-8 8 L6 0 Z" fill="#74f2c4"/><path d="M6 -8 V8" stroke="#74f2c4" stroke-width="2.2"/></g><g transform="translate(300.0 155.0) rotate(-61.9)"><path d="M-8 -8 L-8 8 L6 0 Z" fill="#74f2c4"/><path d="M6 -8 V8" stroke="#74f2c4" stroke-width="2.2"/></g><g transform="translate(380.0 155.0) rotate(61.9)"><path d="M-8 -8 L-8 8 L6 0 Z" fill="#74f2c4"/><path d="M6 -8 V8" stroke="#74f2c4" stroke-width="2.2"/></g>
+    <g fill="#d4f6ff"><circle cx="100" cy="230" r="3"/><circle cx="180" cy="80" r="3"/><circle cx="260" cy="230" r="3"/><circle cx="340" cy="80" r="3"/><circle cx="420" cy="230" r="4"/></g>
+    <circle cx="60" cy="155" r="16" fill="#060a15" stroke="#6fd6ff" stroke-width="1.6"/>
     <path id="cw-wave" d="M50 160 V150 H60 V160 H70 V150" fill="none" stroke="#6fd6ff" stroke-width="1.6"/>
     <g font-family="JetBrains Mono, monospace" font-size="11" fill="#7c88a1">
-      <text x="24" y="122">±0,5 V</text><text x="92" y="56">C1</text><text x="172" y="264">C2</text><text x="292" y="56">C3</text><text x="252" y="264">C4</text>
-      <text x="424" y="226">sortie</text>
+      <text x="14" y="122">±0,5 V</text><text x="112" y="56">C1</text><text x="252" y="56">C3</text><text x="172" y="268">C2</text><text x="332" y="268">C4</text>
+      <text x="392" y="256">sortie</text>
     </g>
-    <circle cx="410" cy="230" r="4" fill="#d4f6ff"/>
     <g class="cw-dots"></g>
-    <rect x="440" y="70" width="18" height="160" rx="5" fill="rgba(255,255,255,.05)" stroke="#2a3550"/>
-    <rect id="cw-fill" x="440" y="230" width="18" height="0" rx="5" fill="url(#cw-bar)"/>
-    <text id="cw-out" x="449" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#d4f6ff">0 V</text>
+    <rect x="448" y="70" width="18" height="160" rx="5" fill="rgba(255,255,255,.05)" stroke="#2a3550"/>
+    <rect id="cw-fill" x="448" y="230" width="18" height="0" rx="5" fill="url(#cw-bar)"/>
+    <text id="cw-out" x="457" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#d4f6ff">0 V</text>
   </svg>
   <div class="seg cw-freq" role="radiogroup" aria-label="Fréquence du signal"><button class="on" data-f="hi">&gt; 500 Hz</button><button data-f="lo">20 Hz</button></div>`;
   const seg = container.querySelector('.cw-freq');

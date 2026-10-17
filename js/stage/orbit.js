@@ -350,7 +350,7 @@ export class OrbitAct {
 
     // Intro: fade in, unfold the wings, ignite.
     const fadeIn = 1 - smooth(0, 0.35, it);
-    const fadeOut = smooth(0.86, 1, p);
+    const fadeOut = smooth(0.92, 1, p);
     this.look.fade = Math.max(fadeIn, fadeOut);
     this.look.fadeColor = fadeOut > fadeIn ? '#cfefff' : '#000000';
     const unfold = easeInOut(smooth(0.15, 0.55, it));
