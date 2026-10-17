@@ -27,7 +27,8 @@ export const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t +
  * of the current panel. sides[i] = -1 when panel i has its card on the left.
  */
 export function frameOpposite(camera, p, sides, w, h, amount = 0.17) {
-  if (w < h) { camera.clearViewOffset(); return; }
+  // Portrait: cards sit at the bottom of the screen, so lift the subject into the upper part.
+  if (w < h) { camera.setViewOffset(w, h, 0, 0.17 * h, w, h); return; }
   const n = sides.length;
   const x = p * n - 0.5;
   const i = Math.max(0, Math.min(n - 1, Math.floor(x)));
@@ -293,7 +294,13 @@ export class Labels {
       const behind = this.v.z > 1;
       const x = (this.v.x * 0.5 + 0.5) * w;
       const y = (-this.v.y * 0.5 + 0.5) * h;
-      const off = it.side === 'left' ? -it.el.offsetWidth + 5 : -5;
+      const ew = it.el.offsetWidth;
+      // Keep labels on screen: flip to the other side when they would overflow.
+      let left = it.side === 'left';
+      if (!left && x + ew > w - 8) left = true;
+      else if (left && x - ew < 8) left = false;
+      it.el.classList.toggle('left', left);
+      const off = left ? -ew + 5 : -5;
       it.el.style.transform = `translate(${(x + off).toFixed(1)}px, ${(y - 10).toFixed(1)}px)`;
       it.el.style.visibility = behind ? 'hidden' : 'visible';
     }

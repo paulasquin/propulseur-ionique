@@ -434,6 +434,11 @@ blockquote { margin: 0 0 20px; font-family: var(--f-display); font-weight: 300; 
 }
 @media (max-width: 860px) {
   body { font-size: 16px; }
+  /* Phones: no live blur over the animated canvas and no full-screen animated grain — both are compositor-heavy. */
+  .card, .topnav.scrolled, .s-label .s-text, .viewer-modes .seg, .video-play, .slides-nav, .btn-ghost { -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .card { background: rgba(5, 9, 20, .9); }
+  .topnav.scrolled { background: rgba(3, 5, 11, .94); }
+  .grain { display: none; }
   .nav-links { position: fixed; inset: 0 0 auto 0; top: 0; padding: 80px var(--pad) 30px; flex-direction: column; gap: 18px; background: rgba(3, 5, 11, .96); backdrop-filter: blur(14px); transform: translateY(-100%); transition: transform .45s cubic-bezier(.2, .8, .2, 1); z-index: -1; }
   .nav-links a { font-size: 18px; }
   .topnav.open .nav-links { transform: none; }

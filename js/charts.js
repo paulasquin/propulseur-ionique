@@ -80,13 +80,13 @@ export function createChart(container, key) {
 
   cfg.series.forEach((s) => {
     const d = s.data.map(([x, y], i) => `${i ? 'L' : 'M'}${sx(x).toFixed(1)},${sy(y).toFixed(1)}`).join('');
-    const glow = el('path', { d, class: 'series', stroke: s.color, 'stroke-width': 6, opacity: 0.12 }, plot);
+    // Soft halo without an SVG/CSS blur filter: blur forces a costly repaint on every reveal step.
+    el('path', { d, class: 'series', stroke: s.color, 'stroke-width': 7, opacity: 0.08 }, plot);
     el('path', { d, class: 'series', stroke: s.color, ...(s.dash ? { 'stroke-dasharray': s.dash } : {}) }, plot);
     if (s.dots) {
       const g = el('g', { class: 'dots' }, plot);
       s.data.forEach(([x, y]) => el('circle', { cx: sx(x), cy: sy(y), r: 2.6, fill: s.color }, g));
     }
-    glow.style.filter = 'blur(2px)';
   });
   (cfg.notes || []).forEach((n) => {
     el('text', { x: sx(n.x), y: sy(n.y), fill: '#b4bfd3', 'font-size': 11, 'font-family': 'JetBrains Mono, monospace', 'text-anchor': 'middle' }, plot).textContent = n.text;
@@ -127,7 +127,9 @@ export function createChart(container, key) {
 
   const api = {
     setReveal(f) {
-      reveal = Math.max(0, Math.min(1, f));
+      const next = Math.max(0, Math.min(1, f));
+      if (Math.abs(next - reveal) < 0.004 && next !== 0 && next !== 1) return;
+      reveal = next;
       clipRect.setAttribute('width', (iw + 12) * reveal + 6);
     },
     play(duration = 2.2) {

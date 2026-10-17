@@ -94,8 +94,15 @@ export class Stage {
     P.frames = 0;
     P.elapsed = 0;
     let next = this.scale;
-    if (P.fps < 45) { next = Math.max(0.5, this.scale * (P.fps < 30 ? 0.75 : 0.87)); P.good = 0; }
-    else if (P.fps > 56 && this.scale < 1) { P.good++; if (P.good >= 3) { next = Math.min(1, this.scale * 1.1); P.good = 0; } }
+    // One slow window can be a scroll hitch: downscale on two in a row, or at once when very slow.
+    if (P.fps < 45) {
+      P.bad = (P.bad || 0) + 1;
+      P.good = 0;
+      if (P.fps < 30 || P.bad >= 2) { next = Math.max(0.5, this.scale * (P.fps < 30 ? 0.75 : 0.87)); P.bad = 0; }
+    } else {
+      P.bad = 0;
+      if (P.fps > 56 && this.scale < 1) { P.good++; if (P.good >= 3) { next = Math.min(1, this.scale * 1.1); P.good = 0; } }
+    }
     if (Math.abs(next - this.scale) > 0.01) {
       this.scale = next;
       this.applyPixelRatio();

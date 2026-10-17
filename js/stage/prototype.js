@@ -2,7 +2,7 @@
 // exports: 3D-print reveal, anatomy, exploded view, needle pivot, ignition,
 // bell jar and a replay of the measured rotation.
 import * as THREE from 'three';
-import { createPlume, studioEnvironment, smooth, lerp, clamp01, easeInOut, glowTexture, frameOpposite } from './fx.js';
+import { createPlume, studioEnvironment, smooth, lerp, clamp01, easeInOut, glowTexture, frameOpposite, QUALITY } from './fx.js';
 import { MEASURES } from '../measures.js';
 import { t as tr } from '../i18n.js';
 
@@ -178,7 +178,8 @@ export class PrototypeAct {
   }
 
   init(renderer) {
-    renderer.shadowMap.enabled = true;
+    // Real-time shadows only where the GPU can afford them (not on phones).
+    renderer.shadowMap.enabled = QUALITY.tier >= 1.5;
     renderer.shadowMap.type = THREE.PCFShadowMap;
     this.scene.environment = studioEnvironment(renderer);
     this.scene.environmentIntensity = 0.32;
@@ -188,6 +189,7 @@ export class PrototypeAct {
   setModels({ croix, pied }) {
     const ivory = () => printable(new THREE.MeshPhysicalMaterial({ color: '#d8cfbc', roughness: 0.55, metalness: 0, clearcoat: 0.15, clearcoatRoughness: 0.6, sheen: 0.3, sheenColor: new THREE.Color('#fff4e0'), side: THREE.DoubleSide }));
     this.croixMat = ivory();
+    if (QUALITY.tier < 1.5) { this.croixMat.sheen = 0; this.croixMat.clearcoat = 0; }
     this.croixMesh = croix;
     croix.material = this.croixMat;
     croix.castShadow = true;
