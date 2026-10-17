@@ -146,7 +146,7 @@ export function createPlume({
         void main() {
           float facing = abs(dot(normalize(vN), normalize(vV)));
           float body = pow(facing, 2.4 + uK * 1.5);
-          float fall = pow(1.0 - vAlong, 2.6) * smoothstep(0.0, 0.12, vAlong);
+          float fall = pow(clamp(1.0 - vAlong, 0.0, 1.0), 2.6) * smoothstep(0.0, 0.12, vAlong);
           float flick = 0.88 + 0.12 * sin(uTime * 37.0 + vAlong * 18.0) * sin(uTime * 23.0 + uK * 3.0);
           float stria = 0.8 + 0.2 * sin(vAlong * 60.0 - uTime * 30.0);
           vec3 col = mix(uCore, uColor, smoothstep(0.0, 0.45, vAlong));
