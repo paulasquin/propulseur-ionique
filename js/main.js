@@ -366,10 +366,19 @@ function setupPanels() {
 }
 
 function heroIntro() {
-  const split = new SplitText('.ht-word:not(.ht-glow)', { type: 'chars' });
-  gsap.from(split.chars, { yPercent: 110, opacity: 0, duration: 1.3, ease: 'expo.out', stagger: 0.035, delay: 0.3 });
-  gsap.from('.ht-glow', { yPercent: 110, opacity: 0, duration: 1.6, ease: 'expo.out', delay: 0.75 });
-  gsap.from('.eyebrow, .hero-sub, .hero-kpis, .hero-cta, .scroll-cue, .hud-orbit', { opacity: 0, y: 24, duration: 1.1, ease: 'power3.out', stagger: 0.09, delay: 0.9 });
+  // fromTo with explicit end values (never "whatever the element looks like now"),
+  // props cleared at the end, and a safety net if a tween is ever cut short.
+  const words = $$('.ht-word:not(.ht-glow)');
+  const split = new SplitText(words, { type: 'chars' });
+  const glow = $('.ht-glow');
+  const rest = $$('.eyebrow, .hero-sub, .hero-kpis, .hero-cta, .scroll-cue, .hud-orbit');
+  const done = () => { split.revert(); gsap.set([glow, ...rest], { clearProps: 'opacity,transform,translate' }); };
+  gsap.fromTo(split.chars, { yPercent: 110, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 1.3, ease: 'expo.out', stagger: 0.035, delay: 0.3 });
+  gsap.fromTo(glow, { yPercent: 110, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 1.6, ease: 'expo.out', delay: 0.75 });
+  gsap.fromTo(rest, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', stagger: 0.09, delay: 0.9, onComplete: done });
+  setTimeout(() => {
+    if ([glow, ...rest].some((e) => getComputedStyle(e).opacity < 0.99)) { gsap.killTweensOf([glow, ...rest, ...split.chars]); done(); }
+  }, 4500);
 }
 
 /* ---------------- boot ---------------- */
