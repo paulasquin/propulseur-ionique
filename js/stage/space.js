@@ -3,6 +3,7 @@
 import * as THREE from 'three';
 import { createStars, glowTexture, smooth, lerp, clamp01, easeInOut, frameOpposite } from './fx.js';
 import { earthMaterial, atmosphere } from './orbit.js';
+import { t as tr } from '../i18n.js';
 
 const R0 = 1.5, R1 = 4.6, TURNS = 6;
 const SUN = new THREE.Vector3(1, 0.35, 0.6).normalize();
@@ -108,11 +109,11 @@ export class SpaceAct {
 
     const L = labels;
     this.lab = {
-      leo: L.add('Orbite basse', new THREE.Vector3(0, 0, R0)),
-      geo: L.add('Orbite haute', new THREE.Vector3(-R1 * 0.7, 0, R1 * 0.7), { side: 'left' }),
-      b1: L.add('Poussée n° 1', new THREE.Vector3(R0, 0, 0), { warm: true }),
-      b2: L.add('Poussée n° 2', new THREE.Vector3(-R1, 0, 0), { warm: true, side: 'left' }),
-      spiral: L.add('Poussée ionique continue', new THREE.Vector3(0, 0, -R1 * 0.82)),
+      leo: L.add(tr('l.leo'), new THREE.Vector3(0, 0, R0)),
+      geo: L.add(tr('l.geo'), new THREE.Vector3(-R1 * 0.7, 0, R1 * 0.7), { side: 'left' }),
+      b1: L.add(tr('l.burn1'), new THREE.Vector3(R0, 0, 0), { warm: true }),
+      b2: L.add(tr('l.burn2'), new THREE.Vector3(-R1, 0, 0), { warm: true, side: 'left' }),
+      spiral: L.add(tr('l.spiral'), new THREE.Vector3(0, 0, -R1 * 0.82)),
     };
     this.tmp = new THREE.Vector3();
     this.tmp2 = new THREE.Vector3();

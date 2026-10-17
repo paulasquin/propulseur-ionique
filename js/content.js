@@ -2,6 +2,9 @@
 // the results and the space missions. Texts come from the original blog
 // (propulseur-ionique.blogspot.com, 2015-2016), proofread and condensed.
 
+import { LANG } from './i18n.js';
+import { EXPERIMENTS_EN, TIMELINE_EN, RESULTS_EN, ISP_EN, MISSIONS_EN, SLIDES_EN } from './content.en.js';
+
 // The experiment videos on YouTube are currently private. Switch this to true
 // once they are public (or unlisted) to show the links in the journal.
 export const VIDEOS_PUBLIC = false;
@@ -215,7 +218,7 @@ export const EXPERIMENTS = [
 ];
 
 export const TIMELINE = [
-  { date: 'Automne 2014', title: 'Les premières idées', text: "Un propulseur ionique, et pourquoi pas ? Les premiers croquis précèdent même le thème officiel." },
+  { date: 'Automne 2014', title: 'Les premières idées', text: 'Et pourquoi pas un propulseur ionique ? Les premiers croquis précèdent même le thème officiel.' },
   { date: 'Février 2015', title: 'Le thème tombe', text: '« Structures : organisation, complexité, dynamique » — le projet colle parfaitement.' },
   { date: 'Mars — juin 2015', title: 'Étude de faisabilité', text: "En PTSI : pile, haute tension, eau salée, vide. Et l'ouverture de ce journal." },
   { date: 'Septembre 2015', title: 'Le gel ionique', text: 'En PT* : le polyacrylate des couches pour bébé règle le problème du vide.' },
@@ -230,8 +233,8 @@ export const RESULTS = [
   { value: 22, decimals: 0, unit: 'kV', label: "tension d'accélération", note: '9 V élevés à 22 225 V' },
   { value: 347, decimals: 0, unit: 'km/s', label: "vitesse d'éjection des ions Cl⁻", note: 'théorique' },
   { value: 36000, decimals: 0, unit: 's', label: 'impulsion spécifique', note: 'théorique' },
-  { value: 3.78, decimals: 2, unit: 'W', label: 'puissance électrique', note: 'une pile 9 V' },
-  { value: 27, decimals: 0, unit: 'ans', label: 'de poussée avec 10 g de sel', note: 'débit 1,2·10⁻¹¹ kg/s' },
+  { value: 3.78, decimals: 2, unit: 'W', label: 'puissance électrique', note: 'une seule pile 9 V' },
+  { value: 27, decimals: 0, unit: 'ans', unitEn: 'years', label: 'de poussée avec 10 g de sel', note: 'débit 1,2·10⁻¹¹ kg/s' },
 ];
 
 export const ISP = [
@@ -272,3 +275,17 @@ export const SLIDES = [
   { n: 14, title: 'Annexe : guidage', text: 'Intégration sous la cloche à vide et équilibre du guidage en rotation.' },
   { n: 15, title: 'Annexe : dimensions', text: 'Vérification de l’homogénéité des formules de la vitesse d’éjection et de l’impulsion spécifique.' },
 ];
+
+// English: same structure, texts from content.en.js.
+if (LANG === 'en') {
+  EXPERIMENTS.forEach((e) => {
+    const en = EXPERIMENTS_EN[e.id];
+    Object.assign(e, { date: en.date, year: en.year, title: en.title, question: en.question, body: en.body, result: en.result, limit: en.limit });
+    e.media.forEach((m, i) => { m.caption = en.captions[i] ?? m.caption; });
+  });
+  TIMELINE.forEach((x, i) => Object.assign(x, TIMELINE_EN[i]));
+  RESULTS.forEach((x, i) => Object.assign(x, RESULTS_EN[i], x.unitEn ? { unit: x.unitEn } : {}));
+  ISP.forEach((x, i) => Object.assign(x, ISP_EN[i]));
+  MISSIONS.forEach((x, i) => { x.text = MISSIONS_EN[i]; });
+  SLIDES.forEach((x, i) => Object.assign(x, SLIDES_EN[i]));
+}

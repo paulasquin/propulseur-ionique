@@ -6,6 +6,25 @@
   <title>Propulseur ionique — Paul Asquin · TIPE 2014-2016</title>
   <meta name="description" content="Concevoir, imprimer en 3D et mesurer un propulseur ionique électrostatique à grille pour CubeSat : le journal de mon TIPE de classe préparatoire (2014-2016).">
   <meta name="theme-color" content="#03050b">
+  <link rel="alternate" hreflang="fr" href="https://ionic.paulasquin.com/?lang=fr">
+  <link rel="alternate" hreflang="en" href="https://ionic.paulasquin.com/?lang=en">
+  <link rel="alternate" hreflang="x-default" href="https://ionic.paulasquin.com/">
+  <script>
+    // Pick the language before first paint: ?lang=, then the visitor's saved choice, then the browser languages.
+    (function () {
+      var ok = ['fr', 'en'], lang = null;
+      try {
+        var q = new URLSearchParams(location.search).get('lang');
+        if (ok.indexOf(q) >= 0) { lang = q; localStorage.setItem('lang', q); }
+        else if (ok.indexOf(localStorage.getItem('lang')) >= 0) lang = localStorage.getItem('lang');
+      } catch (e) {}
+      if (!lang) {
+        var ls = navigator.languages || [navigator.language || ''];
+        for (var i = 0; i < ls.length && !lang; i++) { var b = String(ls[i]).slice(0, 2).toLowerCase(); if (ok.indexOf(b) >= 0) lang = b; }
+      }
+      document.documentElement.lang = lang || 'en';
+    })();
+  </script>
   <meta property="og:title" content="Propulseur ionique — journal d'un TIPE">
   <meta property="og:description" content="6,7 µN mesurés sous une cloche à vide : conception, impression 3D et mesure d'un propulseur ionique à grille.">
   <meta property="og:image" content="https://ionic.paulasquin.com/assets/og.jpg">
@@ -38,7 +57,7 @@
         </svg>
         <div class="loader-readout"><span id="loader-mbar">1013</span><small>mbar</small></div>
       </div>
-      <p class="loader-label">Mise sous vide de la cloche…</p>
+      <p class="loader-label" data-i18n="loader">Mise sous vide de la cloche…</p>
     </div>
   </div>
 
@@ -47,17 +66,18 @@
   <div class="grain" aria-hidden="true"></div>
   <div class="scroll-progress" aria-hidden="true"><span></span></div>
 
-  <nav class="topnav" aria-label="Navigation principale">
-    <a href="#top" class="brand"><span class="brand-ion"></span>Propulseur ionique</a>
+  <nav class="topnav" aria-label="Navigation principale" data-i18n-aria="nav.aria">
+    <a href="#top" class="brand"><span class="brand-ion"></span><span data-i18n="brand">Propulseur ionique</span></a>
     <div class="nav-links">
-      <a href="#principe">Principe</a>
-      <a href="#projet">Projet</a>
-      <a href="#prototype">Prototype</a>
-      <a href="#journal">Expériences</a>
-      <a href="#resultats">Résultats</a>
-      <a href="#espace">Espace</a>
-      <a href="#soutenance">Soutenance</a>
+      <a href="#principe" data-i18n="nav.principle">Principe</a>
+      <a href="#projet" data-i18n="nav.project">Projet</a>
+      <a href="#prototype" data-i18n="nav.prototype">Prototype</a>
+      <a href="#journal" data-i18n="nav.journal">Expériences</a>
+      <a href="#resultats" data-i18n="nav.results">Résultats</a>
+      <a href="#espace" data-i18n="nav.space">Espace</a>
+      <a href="#soutenance" data-i18n="nav.defense">Soutenance</a>
     </div>
+    <div class="lang-switch" role="group" aria-label="Langue / Language"><button data-lang="fr" lang="fr">FR</button><button data-lang="en" lang="en">EN</button></div>
     <button class="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
   </nav>
 
@@ -66,42 +86,42 @@
     <section id="top" class="act" data-act="orbit" data-panels="3">
       <div class="panel panel-hero">
         <div class="hero-content">
-          <p class="eyebrow"><span class="pulse-dot"></span>TIPE de classe préparatoire · 2014 — 2016</p>
-          <h1 class="hero-title">
-            <span class="ht-line"><span class="ht-word">Propulseur</span></span>
-            <span class="ht-line"><span class="ht-word ht-glow">ionique</span></span>
+          <p class="eyebrow"><span class="pulse-dot"></span><span data-i18n="hero.eyebrow">TIPE de classe préparatoire · 2014 — 2016</span></p>
+          <h1 class="hero-title" data-i18n-title>
+            <span class="ht-line"><span class="ht-word" data-i18n="hero.t1">Propulseur</span></span>
+            <span class="ht-line"><span class="ht-word ht-glow" data-i18n="hero.t2">ionique</span></span>
           </h1>
-          <p class="hero-sub">Concevoir, imprimer en 3D et mesurer un propulseur électrostatique à grille pour nanosatellite — sous une cloche à vide de lycée.</p>
+          <p class="hero-sub" data-i18n="hero.sub">Concevoir, imprimer en 3D et mesurer un propulseur électrostatique à grille pour nanosatellite — sous une cloche à vide de lycée.</p>
           <dl class="hero-kpis">
-            <div><dt>poussée mesurée</dt><dd><span data-count="6.7" data-decimals="1">6,7</span> µN</dd></div>
-            <div><dt>tension</dt><dd><span data-count="22">22</span> kV</dd></div>
-            <div><dt>impulsion spécifique</dt><dd><span data-count="36000">36 000</span> s</dd></div>
+            <div><dt data-i18n="hero.k1">poussée mesurée</dt><dd><span data-count="6.7" data-decimals="1">6,7</span> µN</dd></div>
+            <div><dt data-i18n="hero.k2">tension</dt><dd><span data-count="22">22</span> kV</dd></div>
+            <div><dt data-i18n="hero.k3">impulsion spécifique</dt><dd><span data-count="36000">36 000</span> s</dd></div>
           </dl>
           <div class="hero-cta">
-            <a href="#principe" class="btn btn-primary">Comment ça marche</a>
-            <a href="#prototype" class="btn btn-ghost">Le prototype en 3D</a>
+            <a href="#principe" class="btn btn-primary" data-i18n="hero.cta1">Comprendre le principe</a>
+            <a href="#prototype" class="btn btn-ghost" data-i18n="hero.cta2">Le prototype en 3D</a>
           </div>
         </div>
-        <div class="scroll-cue" aria-hidden="true"><span></span>Défiler</div>
+        <div class="scroll-cue" aria-hidden="true"><span></span><i data-i18n="hero.scroll">Défiler</i></div>
         <div class="hud hud-orbit" aria-hidden="true">
           <div><span>ALT</span><b id="hud-alt">412 km</b></div>
-          <div><span>V</span><b id="hud-vel">7,66 km/s</b></div>
-          <div><span>POUSSÉE</span><b id="hud-thr">ON</b></div>
+          <div><span>V</span><b id="hud-vel" data-i18n="hero.hudVel">7,66 km/s</b></div>
+          <div><span data-i18n="hero.hudThrust">POUSSÉE</span><b id="hud-thr">ON</b></div>
         </div>
       </div>
       <div class="panel panel-right">
         <div class="card">
-          <p class="kicker">Le principe en une phrase</p>
-          <h2>Dans l'espace, rien ne freine.</h2>
-          <p>Un propulseur ionique arrache des particules chargées à un ergol, les accélère dans un champ électrique intense et les éjecte à des centaines de kilomètres par seconde. Par action-réaction, le satellite avance.</p>
-          <p>La poussée est infime — de l'ordre du micronewton — mais elle peut durer des mois, voire des années.</p>
+          <p class="kicker" data-i18n="o1.k">Le principe en une phrase</p>
+          <h2 data-i18n="o1.h">Dans l'espace, rien ne freine.</h2>
+          <p data-i18n="o1.p1">Un propulseur ionique arrache des particules chargées à un ergol, les accélère dans un champ électrique intense et les éjecte à des centaines de kilomètres par seconde. Par action-réaction, le satellite avance.</p>
+          <p data-i18n="o1.p2">La poussée est infime — de l'ordre du micronewton — mais elle peut durer des mois, voire des années.</p>
         </div>
       </div>
       <div class="panel panel-left">
         <div class="card">
-          <p class="kicker">Pourquoi un CubeSat</p>
-          <h2>Des satellites de la taille d'une brique de lait.</h2>
-          <p>Grâce à la miniaturisation, des nanosatellites de 10 cm de côté accomplissent aujourd'hui des missions réservées autrefois à des engins de plusieurs tonnes. Ils ont besoin d'une propulsion compacte et sobre en ergol : c'est tout l'objet de ce projet.</p>
+          <p class="kicker" data-i18n="o2.k">Pourquoi un CubeSat</p>
+          <h2 data-i18n="o2.h">Des satellites de la taille d'une brique de lait.</h2>
+          <p data-i18n="o2.p">Grâce à la miniaturisation, des nanosatellites de 10 cm de côté accomplissent aujourd'hui des missions réservées autrefois à des engins de plusieurs tonnes. Ils ont besoin d'une propulsion compacte et sobre en ergol : c'est tout l'objet de ce projet.</p>
         </div>
       </div>
     </section>
@@ -110,47 +130,47 @@
     <section id="principe" class="act" data-act="principle" data-panels="5">
       <div class="panel panel-left">
         <div class="card">
-          <p class="kicker">Principe · 01</p>
-          <h2>Un propulseur électrostatique à grille</h2>
-          <p>Mon projet s'inspire des propulseurs miniatures du MIT : pas de pompe, pas de réservoir sous pression. L'ergol monte seul jusqu'aux grilles par capillarité.</p>
-          <p class="mono-note">Ergol : eau salée gélifiée — ions Na⁺ et Cl⁻</p>
+          <p class="kicker" data-i18n="p1.k">Principe · 01</p>
+          <h2 data-i18n="p1.h">Un propulseur électrostatique à grille</h2>
+          <p data-i18n="p1.p">Mon projet s'inspire des micropropulseurs du MIT : ni pompe, ni réservoir sous pression. L'ergol monte seul jusqu'aux grilles par capillarité.</p>
+          <p class="mono-note" data-i18n="p1.note">Ergol : eau salée gélifiée — ions Na⁺ et Cl⁻</p>
         </div>
       </div>
       <div class="panel panel-right">
         <div class="card">
-          <p class="kicker">Principe · 02</p>
-          <h2>Le gel ionique</h2>
-          <p>Dans chaque alvéole, de l'eau salée piégée dans du polyacrylate de sodium. Le gel ne bout pas sous vide et laisse suinter la solution jusqu'à l'aiguille.</p>
+          <p class="kicker" data-i18n="p2.k">Principe · 02</p>
+          <h2 data-i18n="p2.h">Le gel ionique</h2>
+          <p data-i18n="p2.p">Chaque alvéole contient de l'eau salée piégée dans du polyacrylate de sodium. Le gel ne bout pas sous vide et laisse suinter la solution jusqu'à l'aiguille.</p>
         </div>
       </div>
       <div class="panel panel-left">
         <div class="card">
-          <p class="kicker">Principe · 03</p>
-          <h2>Le ménisque et le cône de Taylor</h2>
-          <p>Au bout de l'aiguille, le champ électrique étire le ménisque en un cône pointu. À sa pointe, le champ devient si intense qu'il arrache les ions un à un.</p>
+          <p class="kicker" data-i18n="p3.k">Principe · 03</p>
+          <h2 data-i18n="p3.h">Le ménisque et le cône de Taylor</h2>
+          <p data-i18n="p3.p">Au bout de l'aiguille, le champ électrique étire le ménisque en un cône pointu. À sa pointe, le champ devient si intense qu'il arrache les ions un à un.</p>
         </div>
       </div>
       <div class="panel panel-right">
         <div class="card">
-          <p class="kicker">Principe · 04</p>
-          <h2>Grille d'extraction, grille d'accélération</h2>
-          <p>La grille d'accélération passe alternativement à <b class="t-plus">+22 kV</b> et <b class="t-minus">−22 kV</b>. Les ions Cl⁻ puis Na⁺ sont tour à tour éjectés : le satellite reste électriquement neutre.</p>
+          <p class="kicker" data-i18n="p4.k">Principe · 04</p>
+          <h2 data-i18n="p4.h">Grille d'extraction, grille d'accélération</h2>
+          <p data-i18n="p4.p">La grille d'accélération passe alternativement à <b class="t-plus">+22 kV</b> et <b class="t-minus">−22 kV</b>. Les ions Cl⁻ puis Na⁺ sont tour à tour éjectés : le satellite reste électriquement neutre.</p>
           <div class="polarity" aria-hidden="true"><span class="pol-dot"></span><span id="pol-label">+22 kV · éjection de Cl⁻</span></div>
         </div>
       </div>
       <div class="panel panel-lab">
         <div class="card card-lab">
-          <p class="kicker">Principe · 05 — À vous de jouer</p>
-          <h2>Action, réaction</h2>
-          <p>L'énergie électrique devient énergie cinétique : <span class="formula">v<sub>e</sub> = √(2qV/m)</span>. Plus les ions sont rapides, moins on consomme d'ergol pour une même poussée.</p>
+          <p class="kicker" data-i18n="p5.k">Principe · 05 — Simulation interactive</p>
+          <h2 data-i18n="p5.h">Action, réaction</h2>
+          <p data-i18n="p5.p">L'énergie électrique devient énergie cinétique : <span class="formula">v<sub>e</sub> = √(2qV/m)</span>. Plus les ions sont rapides, moins on consomme d'ergol pour une même poussée.</p>
           <div class="lab">
             <label class="lab-row">
-              <span>Tension d'accélération</span>
-              <input type="range" id="lab-volt" min="0.5" max="30" step="0.1" value="22.2" aria-label="Tension d'accélération en kilovolts">
+              <span data-i18n="lab.volt">Tension d'accélération</span>
+              <input type="range" id="lab-volt" min="0.5" max="30" step="0.1" value="22.2" aria-label="Tension d'accélération en kilovolts" data-i18n-aria="lab.voltAria">
               <output id="lab-volt-out">22,2 kV</output>
             </label>
-            <div class="lab-row lab-ions" role="radiogroup" aria-label="Ion éjecté">
-              <span>Ion éjecté</span>
+            <div class="lab-row lab-ions" role="radiogroup" aria-label="Ion éjecté" data-i18n-aria="lab.ion">
+              <span data-i18n="lab.ion">Ion éjecté</span>
               <div class="seg">
                 <button data-ion="cl" class="on" role="radio" aria-checked="true">Cl⁻</button>
                 <button data-ion="na" role="radio" aria-checked="false">Na⁺</button>
@@ -158,11 +178,11 @@
               </div>
             </div>
             <div class="lab-out">
-              <div><span>vitesse d'éjection</span><b id="lab-ve">347 km/s</b></div>
-              <div><span>impulsion spécifique</span><b id="lab-isp">35 400 s</b></div>
-              <div><span>poussée pour 3,78 W*</span><b id="lab-f">22 µN</b></div>
+              <div><span data-i18n="lab.ve">vitesse d'éjection</span><b id="lab-ve">347 km/s</b></div>
+              <div><span data-i18n="lab.isp">impulsion spécifique</span><b id="lab-isp">35 400 s</b></div>
+              <div><span data-i18n="lab.f">poussée pour 3,78 W*</span><b id="lab-f">22 µN</b></div>
             </div>
-            <p class="lab-foot">* Poussée idéale F = 2P/v<sub>e</sub> (rendement de 100 %). Les moteurs du commerce accélèrent du xénon sous 1 à 2 kV : moins de vitesse, mais bien plus de poussée par watt.</p>
+            <p class="lab-foot" data-i18n="lab.foot">* Poussée idéale F = 2P/v<sub>e</sub> (rendement de 100 %). Les moteurs du commerce accélèrent du xénon sous 1 à 2 kV : moins de vitesse, mais bien plus de poussée par watt.</p>
           </div>
         </div>
       </div>
@@ -173,19 +193,19 @@
       <div class="wrap">
         <div class="split">
           <div>
-            <p class="kicker">Le projet</p>
-            <h2 class="h-xl">Un TIPE, deux ans,<br><em>une cloche à vide.</em></h2>
+            <p class="kicker" data-i18n="proj.k">Le projet</p>
+            <h2 class="h-xl" data-i18n="proj.h">Un TIPE, deux ans,<br><em>une cloche à vide.</em></h2>
           </div>
           <div class="lead-col">
-            <p class="lead">Le TIPE — Travail d'Initiative Personnelle Encadré — est l'épreuve de projet des concours d'écoles d'ingénieurs. Le mien a commencé à l'automne 2014 au lycée La Martinière Monplaisir, à Lyon, avec une question simple : peut-on construire, avec les moyens d'un laboratoire de lycée, un propulseur ionique qui pousse vraiment ?</p>
-            <p>Ce site reprend le journal que je tenais alors en ligne, pour partager mes résultats, garder la trace de chaque expérience et recevoir les conseils d'internautes avisés. Les modèles 3D sont ceux que j'avais dessinés sous SolidWorks, les courbes sont tracées à partir de mes relevés d'origine.</p>
+            <p class="lead" data-i18n="proj.lead">Les TIPE — travaux d'initiative personnelle encadrés — constituent l'épreuve de projet des concours d'écoles d'ingénieurs. Le mien a commencé à l'automne 2014 au lycée La Martinière Monplaisir, à Lyon, avec une question simple : peut-on construire, avec les moyens d'un laboratoire de lycée, un propulseur ionique qui pousse vraiment ?</p>
+            <p data-i18n="proj.p">Ce site reprend le journal que je tenais alors en ligne, pour partager mes résultats, garder la trace de chaque expérience et recevoir les conseils d'internautes avisés. Les modèles 3D sont ceux que j'avais dessinés sous SolidWorks, et les courbes sont tracées à partir de mes relevés d'origine.</p>
           </div>
         </div>
         <ol class="timeline" id="timeline"></ol>
         <div class="photo-strip">
-          <figure class="ph ph-a" data-lightbox="projet"><img src="assets/photos/proto-face-s.webp" data-full="assets/photos/proto-face.webp" alt="Le prototype câblé, piles 9 V en place" loading="lazy"><figcaption>Octobre 2015 : le prototype #2.1, câblé</figcaption></figure>
-          <figure class="ph ph-b" data-lightbox="projet"><img src="assets/photos/cloche-pompe-s.webp" data-full="assets/photos/cloche-pompe.webp" alt="La cloche à vide et sa pompe à palettes" loading="lazy"><figcaption>La cloche à vide du labo et sa pompe à palettes</figcaption></figure>
-          <figure class="ph ph-c" data-lightbox="projet"><img src="assets/photos/labo-s.webp" data-full="assets/photos/labo.webp" alt="Le laboratoire de physique" loading="lazy"><figcaption>Le labo de physique de La Martinière Monplaisir</figcaption></figure>
+          <figure class="ph ph-a" data-lightbox="projet"><img src="assets/photos/proto-face-s.webp" data-full="assets/photos/proto-face.webp" alt="Le prototype câblé, piles 9 V en place" data-i18n-alt="ph1.alt" loading="lazy"><figcaption data-i18n="ph1.c">Octobre 2015 : le prototype #2.1, câblé</figcaption></figure>
+          <figure class="ph ph-b" data-lightbox="projet"><img src="assets/photos/cloche-pompe-s.webp" data-full="assets/photos/cloche-pompe.webp" alt="La cloche à vide et sa pompe à palettes" data-i18n-alt="ph2.alt" loading="lazy"><figcaption data-i18n="ph2.c">La cloche à vide du laboratoire et sa pompe à palettes</figcaption></figure>
+          <figure class="ph ph-c" data-lightbox="projet"><img src="assets/photos/labo-s.webp" data-full="assets/photos/labo.webp" alt="Le laboratoire de physique" data-i18n-alt="ph3.alt" loading="lazy"><figcaption data-i18n="ph3.c">Le laboratoire de physique de La Martinière Monplaisir</figcaption></figure>
         </div>
       </div>
     </section>
@@ -194,58 +214,58 @@
     <section id="prototype" class="act" data-act="prototype" data-panels="7">
       <div class="panel panel-left">
         <div class="card">
-          <p class="kicker">Le prototype · 01</p>
-          <h2>Dessiné sous SolidWorks, imprimé couche par couche</h2>
-          <p>Le propulseur #2.1 est une seule pièce de 160 mm d'envergure et 84 mm de haut. C'est le modèle original, chargé ici depuis mes fichiers de 2015.</p>
-          <div class="print-meter" aria-hidden="true"><span>couche</span><b id="print-layer">0</b><span>/ 420</span></div>
+          <p class="kicker" data-i18n="t1.k">Le prototype · 01</p>
+          <h2 data-i18n="t1.h">Dessiné sous SolidWorks, imprimé couche par couche</h2>
+          <p data-i18n="t1.p">Le propulseur #2.1 est une seule pièce de 160 mm d'envergure et 84 mm de haut. C'est le modèle original, chargé ici depuis mes fichiers de 2015.</p>
+          <div class="print-meter" aria-hidden="true"><span data-i18n="t1.layer">couche</span><b id="print-layer">0</b><span>/ 420</span></div>
         </div>
       </div>
       <div class="panel panel-right">
         <div class="card">
-          <p class="kicker">Le prototype · 02</p>
-          <h2>Anatomie</h2>
-          <p>Au bout de chacun des quatre bras, une unité de propulsion : le gel ionique et ses grilles. Entre eux, les logements des piles 9 V et des élévateurs de tension. Tout est embarqué.</p>
+          <p class="kicker" data-i18n="t2.k">Le prototype · 02</p>
+          <h2 data-i18n="t2.h">Anatomie</h2>
+          <p data-i18n="t2.p">Au bout de chacun des quatre bras, une unité de propulsion : le gel ionique et ses grilles. Entre eux, les logements des piles 9 V et des élévateurs de tension. Tout est embarqué.</p>
         </div>
       </div>
       <div class="panel panel-left">
         <div class="card">
-          <p class="kicker">Le prototype · 03</p>
-          <h2>Vue éclatée</h2>
-          <p>La structure, un verre de montre logé sous le dôme, une aiguille plantée dans une masse en laiton, et le socle qui dévie le flux d'air de la pompe.</p>
+          <p class="kicker" data-i18n="t3.k">Le prototype · 03</p>
+          <h2 data-i18n="t3.h">Vue éclatée</h2>
+          <p data-i18n="t3.p">La structure, un verre de montre logé sous le dôme, une aiguille plantée dans une masse en laiton, et le socle qui dévie le flux d'air de la pompe.</p>
         </div>
       </div>
       <div class="panel panel-right">
         <div class="card">
-          <p class="kicker">Le prototype · 04</p>
-          <h2>Un pivot de radiomètre</h2>
-          <p>La structure repose par son verre de montre sur la pointe de l'aiguille, comme les ailettes d'un radiomètre de Crookes. Le centre de gravité, placé sous le point de contact, assure l'équilibre.</p>
+          <p class="kicker" data-i18n="t4.k">Le prototype · 04</p>
+          <h2 data-i18n="t4.h">Un pivot de radiomètre</h2>
+          <p data-i18n="t4.p">La structure repose par son verre de montre sur la pointe de l'aiguille, comme les ailettes d'un radiomètre de Crookes. Le centre de gravité, placé sous le point de contact, assure l'équilibre.</p>
         </div>
       </div>
       <div class="panel panel-left">
         <div class="card">
-          <p class="kicker">Le prototype · 05</p>
-          <h2>Allumage</h2>
-          <p>Les quatre unités poussent tangentiellement, toutes dans le même sens. La structure se met à tourner — très, très lentement.</p>
+          <p class="kicker" data-i18n="t5.k">Le prototype · 05</p>
+          <h2 data-i18n="t5.h">Allumage</h2>
+          <p data-i18n="t5.p">Les quatre unités poussent tangentiellement, toutes dans le même sens. La structure se met à tourner — très, très lentement.</p>
         </div>
       </div>
       <div class="panel panel-right">
         <div class="card">
-          <p class="kicker">Le prototype · 06</p>
-          <h2>Sous la cloche à vide</h2>
-          <p>Pour s'affranchir des frottements de l'air et laisser les ions filer, tout se passe sous une cloche reliée à une pompe à palettes : quelques millibars seulement.</p>
-          <div class="gauge-mini" aria-hidden="true"><span>pression</span><b id="jar-mbar">1013</b><span>mbar</span></div>
+          <p class="kicker" data-i18n="t6.k">Le prototype · 06</p>
+          <h2 data-i18n="t6.h">Sous la cloche à vide</h2>
+          <p data-i18n="t6.p">Pour s'affranchir des frottements de l'air et laisser les ions filer, tout se passe sous une cloche reliée à une pompe à palettes : quelques millibars seulement.</p>
+          <div class="gauge-mini" aria-hidden="true"><span data-i18n="t6.pressure">pression</span><b id="jar-mbar">1013</b><span>mbar</span></div>
         </div>
       </div>
       <div class="panel panel-measure">
         <div class="card card-wide">
-          <p class="kicker">Le prototype · 07 — La mesure</p>
-          <h2>Avec ou sans propulseurs</h2>
-          <p>La poussée est trop faible pour vaincre le frottement statique : je lance donc la structure, puis je compare sa décélération propulseurs éteints et allumés. Relevés d'origine, tour par tour :</p>
+          <p class="kicker" data-i18n="t7.k">Le prototype · 07 — La mesure</p>
+          <h2 data-i18n="t7.h">Avec ou sans propulseurs</h2>
+          <p data-i18n="t7.p">La poussée est trop faible pour vaincre le frottement statique : je lance donc la structure, puis je compare sa décélération propulseurs éteints et allumés. Relevés d'origine, tour par tour :</p>
           <div class="chart" id="chart-proto" data-chart="thrust"></div>
           <div class="eq">
-            <span>J·θ̈<sub>sans</sub> = M<sub>frot</sub></span>
-            <span>J·θ̈<sub>avec</sub> = M<sub>frot</sub> + M<sub>prop</sub></span>
-            <span class="eq-res">F<sub>unité</sub> = 6,7 µN ± 2,3 µN</span>
+            <span data-i18n="t7.e1">J·θ̈<sub>sans</sub> = M<sub>frot</sub></span>
+            <span data-i18n="t7.e2">J·θ̈<sub>avec</sub> = M<sub>frot</sub> + M<sub>prop</sub></span>
+            <span class="eq-res" data-i18n="t7.e3">F<sub>unité</sub> = 6,7 µN ± 2,3 µN</span>
           </div>
         </div>
       </div>
@@ -255,9 +275,9 @@
     <section id="journal" class="section section-journal">
       <div class="wrap">
         <div class="section-head">
-          <p class="kicker">Journal des expériences</p>
-          <h2 class="h-xl">Dix expériences,<br><em>deux impressions 3D.</em></h2>
-          <p class="lead">De mars 2015 à mars 2016, chaque étape a commencé par une question, et parfois par un échec. Les données sont celles relevées à l'époque.</p>
+          <p class="kicker" data-i18n="jn.k">Journal des expériences</p>
+          <h2 class="h-xl" data-i18n="jn.h">Dix expériences,<br><em>deux impressions 3D.</em></h2>
+          <p class="lead" data-i18n="jn.lead">De mars 2015 à mars 2016, chaque étape a commencé par une question, et parfois par un échec. Les données sont celles relevées à l'époque.</p>
         </div>
         <div class="journal" id="journal-list"></div>
       </div>
@@ -267,17 +287,17 @@
     <section id="resultats" class="section section-results">
       <div class="wrap">
         <div class="section-head">
-          <p class="kicker">Résultats</p>
-          <h2 class="h-xl">Le poids d'un quart<br><em>de moustique.</em></h2>
-          <p class="lead">6,7 µN, c'est le poids d'une masse de 0,7 mg. Minuscule sur Terre ; mais dans l'espace, sans rien pour freiner, une telle poussée finit par compter.</p>
+          <p class="kicker" data-i18n="res.k">Résultats</p>
+          <h2 class="h-xl" data-i18n="res.h">Le poids d'un quart<br><em>de moustique.</em></h2>
+          <p class="lead" data-i18n="res.lead">6,7 µN, c'est le poids d'une masse de 0,7 mg. Minuscule sur Terre ; mais dans l'espace, sans rien pour freiner, une telle poussée finit par compter.</p>
         </div>
         <div class="results" id="results-grid"></div>
         <div class="split split-top">
           <div>
-            <p class="kicker">Impulsion spécifique</p>
-            <h3 class="h-md">Combien de temps un kilo d'ergol pousse-t-il un kilo ?</h3>
-            <p>L'impulsion spécifique mesure l'efficacité d'un moteur : plus elle est grande, moins il consomme. La valeur théorique de mon propulseur est spectaculaire, parce que ses ions sont accélérés sous une tension très élevée — au prix d'une poussée par watt bien plus faible.</p>
-            <p class="note-2026"><b>Note de 2026.</b> Dans mon modèle, j'avais écrit P = F·v<sub>e</sub>. La puissance d'un jet vaut en réalité ½·F·v<sub>e</sub> : la poussée théorique serait de 22 µN plutôt que 11 µN, et le rendement estimé de mon prototype d'environ 30 % plutôt que 60 %.</p>
+            <p class="kicker" data-i18n="isp.k">Impulsion spécifique</p>
+            <h3 class="h-md" data-i18n="isp.h">Combien de temps un kilogramme d'ergol peut-il produire une poussée égale à son propre poids ?</h3>
+            <p data-i18n="isp.p">L'impulsion spécifique mesure l'efficacité d'un moteur : plus elle est grande, moins il consomme. La valeur théorique de mon propulseur est spectaculaire, parce que ses ions sont accélérés sous une tension très élevée — au prix d'une poussée par watt bien plus faible.</p>
+            <p class="note-2026" data-i18n="isp.note"><b>Note de 2026.</b> Dans mon modèle, j'avais écrit P = F·v<sub>e</sub>. La puissance d'un jet vaut en réalité ½·F·v<sub>e</sub> : la poussée théorique serait de 22 µN plutôt que 11 µN, et le rendement estimé de mon prototype d'environ 30 % plutôt que 60 %.</p>
           </div>
           <div class="isp" id="isp-chart"></div>
         </div>
@@ -288,33 +308,33 @@
     <section id="espace" class="act" data-act="space" data-panels="4">
       <div class="panel panel-left">
         <div class="card">
-          <p class="kicker">La propulsion ionique dans l'espace · 01</p>
-          <h2>Deux façons de monter en orbite</h2>
-          <p>Pour passer d'une orbite basse à une orbite haute, un moteur chimique donne deux coups de pied brefs et violents. Un moteur ionique pousse doucement, sans jamais s'arrêter.</p>
+          <p class="kicker" data-i18n="s1.k">La propulsion ionique dans l'espace · 01</p>
+          <h2 data-i18n="s1.h">Deux façons de monter en orbite</h2>
+          <p data-i18n="s1.p">Pour passer d'une orbite basse à une orbite haute, un moteur chimique délivre deux impulsions brèves et puissantes. Un moteur ionique pousse doucement, sans jamais s'arrêter.</p>
         </div>
       </div>
       <div class="panel panel-right">
         <div class="card">
-          <p class="kicker">02 · Chimique</p>
-          <h2 class="t-chem">Le transfert de Hohmann</h2>
-          <p>Une poussée au périgée, une demi-ellipse, une seconde poussée à l'apogée : quelques heures suffisent. Mais l'ergol, éjecté à 3 km/s à peine, représente l'essentiel de la masse au départ.</p>
+          <p class="kicker" data-i18n="s2.k">02 · Chimique</p>
+          <h2 class="t-chem" data-i18n="s2.h">Le transfert de Hohmann</h2>
+          <p data-i18n="s2.p">Une poussée au périgée, une demi-ellipse, une seconde poussée à l'apogée : quelques heures suffisent. Mais l'ergol, éjecté à 3 km/s à peine, représente l'essentiel de la masse au départ.</p>
         </div>
       </div>
       <div class="panel panel-left">
         <div class="card">
-          <p class="kicker">03 · Ionique</p>
-          <h2 class="t-ion">La spirale</h2>
-          <p>Une poussée minuscule mais continue : le satellite s'éloigne tour après tour, pendant des semaines ou des mois. Ses ions filant dix fois plus vite, il emporte, pour une même charge utile, plus de quinze fois moins d'ergol.</p>
+          <p class="kicker" data-i18n="s3.k">03 · Ionique</p>
+          <h2 class="t-ion" data-i18n="s3.h">La spirale</h2>
+          <p data-i18n="s3.p">Une poussée minuscule mais continue : le satellite s'éloigne tour après tour, pendant des semaines ou des mois. Ses ions filant dix fois plus vite, il emporte, pour une même charge utile, plus de quinze fois moins d'ergol.</p>
         </div>
       </div>
       <div class="panel panel-right">
         <div class="card">
-          <p class="kicker">04 · Équation de Tsiolkovski</p>
-          <h2>Ce qu'il faut emporter</h2>
-          <p>Part de la masse au départ occupée par l'ergol, pour un même gain de vitesse de 4 km/s :</p>
+          <p class="kicker" data-i18n="s4.k">04 · Équation de Tsiolkovski</p>
+          <h2 data-i18n="s4.h">Ce qu'il faut emporter</h2>
+          <p data-i18n="s4.p">Part de la masse au départ occupée par l'ergol, pour un même gain de vitesse de 4 km/s :</p>
           <div class="tanks">
-            <div class="tank tank-chem"><div class="tank-fill" style="--f:.72"></div><b>72 %</b><span>chimique<br><small>I<sub>sp</sub> = 320 s</small></span></div>
-            <div class="tank tank-ion"><div class="tank-fill" style="--f:.127"></div><b>13 %</b><span>ionique<br><small>I<sub>sp</sub> = 3 000 s</small></span></div>
+            <div class="tank tank-chem"><div class="tank-fill" style="--f:.72"></div><b>72 %</b><span><i data-i18n="s4.chem">chimique</i><br><small>I<sub>sp</sub> = 320 s</small></span></div>
+            <div class="tank tank-ion"><div class="tank-fill" style="--f:.127"></div><b>13 %</b><span><i data-i18n="s4.ion">ionique</i><br><small data-i18n="s4.ionIsp">I<sub>sp</sub> = 3 000 s</small></span></div>
           </div>
         </div>
       </div>
@@ -324,21 +344,21 @@
     <section id="missions" class="section section-missions">
       <div class="wrap">
         <div class="section-head">
-          <p class="kicker">Ils volent déjà</p>
-          <h2 class="h-xl">De Deep Space 1<br><em>aux constellations.</em></h2>
-          <p class="lead">Apparue en 1998 comme propulsion principale d'une sonde, la propulsion électrique équipe aujourd'hui des milliers de satellites. En 2016, je concluais ma soutenance sur ses missions envisageables ; dix ans plus tard, elles sont devenues banales.</p>
+          <p class="kicker" data-i18n="mis.k">Ils volent déjà</p>
+          <h2 class="h-xl" data-i18n="mis.h">De Deep Space 1<br><em>aux constellations.</em></h2>
+          <p class="lead" data-i18n="mis.lead">Apparue en 1998 comme propulsion principale d'une sonde, la propulsion électrique équipe aujourd'hui des milliers de satellites. En 2016, je concluais ma soutenance sur ses missions envisageables ; dix ans plus tard, elles sont devenues réalité.</p>
         </div>
         <div class="missions" id="missions-list"></div>
         <div class="split split-top mit">
           <div>
-            <p class="kicker">L'inspiration</p>
-            <h3 class="h-md">Les micropropulseurs du MIT</h3>
-            <p>Mon banc de test reprenait l'idée du laboratoire de propulsion spatiale du MIT : des propulseurs électrospray à liquide ionique montés sur une structure en rotation, dont on observe la vitesse. Le leur flottait par sustentation magnétique ; le mien reposait sur une aiguille.</p>
+            <p class="kicker" data-i18n="mit.k">L'inspiration</p>
+            <h3 class="h-md" data-i18n="mit.h">Les micropropulseurs du MIT</h3>
+            <p data-i18n="mit.p">Mon banc de test reprenait l'idée du laboratoire de propulsion spatiale du MIT : des propulseurs électrospray à liquide ionique montés sur une structure en rotation, dont on observe la vitesse. Le leur flottait par sustentation magnétique ; le mien reposait sur une aiguille.</p>
           </div>
           <div class="video" data-yt="47kzpfh2rMs" data-title="iEPS thrusters firing in two directions — MIT Space Propulsion Laboratory">
             <img src="https://i.ytimg.com/vi/47kzpfh2rMs/hqdefault.jpg" alt="" loading="lazy">
-            <button class="video-play" aria-label="Lire la vidéo du MIT"><span></span></button>
-            <p class="video-cap">Propulseurs iEPS du MIT en rotation · vidéo de F. Mier-Hicks</p>
+            <button class="video-play" aria-label="Lire la vidéo du MIT" data-i18n-aria="mit.play"><span></span></button>
+            <p class="video-cap" data-i18n="mit.cap">Propulseurs iEPS du MIT en rotation · vidéo de F. Mier-Hicks</p>
           </div>
         </div>
       </div>
@@ -348,18 +368,19 @@
     <section id="soutenance" class="section section-defense">
       <div class="wrap">
         <div class="section-head">
-          <p class="kicker">29 juin 2016 · IUT Paris Descartes</p>
-          <h2 class="h-xl">Dix minutes<br><em>pour deux ans.</em></h2>
-          <p class="lead">L'oral du concours Banque PT : 10 minutes de présentation, 10 minutes de questions. Le jury a lu la fiche synoptique juste avant mon entrée. J'ai parlé 9 min 53 s.</p>
+          <p class="kicker" data-i18n="def.k">29 juin 2016 · IUT Paris Descartes</p>
+          <h2 class="h-xl" data-i18n="def.h">Dix minutes<br><em>pour deux ans.</em></h2>
+          <p class="lead" data-i18n="def.lead">L'oral du concours Banque PT : 10 minutes de présentation, 10 minutes de questions. Le jury avait lu ma fiche synoptique juste avant mon entrée. Mon exposé a duré 9 min 53 s.</p>
         </div>
         <div class="slides" id="slides">
           <div class="slides-stage">
-            <button class="slides-nav prev" aria-label="Diapositive précédente">‹</button>
+            <button class="slides-nav prev" aria-label="Diapositive précédente" data-i18n-aria="def.prev">‹</button>
             <figure class="slides-main"><img id="slide-img" src="assets/slides/diapo-01.webp" alt="Diapositive 1 de la présentation finale"></figure>
-            <button class="slides-nav next" aria-label="Diapositive suivante">›</button>
+            <button class="slides-nav next" aria-label="Diapositive suivante" data-i18n-aria="def.next">›</button>
           </div>
           <div class="slides-side">
             <p class="slides-count"><b id="slide-n">01</b> / 15</p>
+            <p class="slides-lang" data-i18n="def.note"></p>
             <h3 id="slide-title">Le sujet</h3>
             <p id="slide-text"></p>
             <div class="slides-thumbs" id="slide-thumbs"></div>
@@ -367,14 +388,14 @@
         </div>
         <div class="synopsis">
           <div class="syn-col">
-            <p class="kicker">Fiche synoptique · extrait</p>
-            <blockquote>« Le modèle économique de l'exploration spatiale est en pleine mutation. Les réductions budgétaires ont favorisé l'avènement de technologies plus économes. Grâce à la miniaturisation généralisée des technologies, les nanosatellites CubeSat sont à même d'accomplir les missions de leurs ancêtres de plus grande taille. »</blockquote>
-            <p class="syn-obj"><b>Objectif :</b> concevoir et étudier un modèle de propulseur ionique adapté aux besoins d'un CubeSat.</p>
+            <p class="kicker" data-i18n="syn.k">Fiche synoptique · extrait</p>
+            <blockquote data-i18n="syn.q">« Le modèle économique de l'exploration spatiale est en pleine mutation. Les réductions budgétaires ont favorisé l'avènement de technologies plus économes. Grâce à la miniaturisation généralisée des technologies, les nanosatellites CubeSat sont à même d'accomplir les missions de leurs ancêtres de plus grande taille. »</blockquote>
+            <p class="syn-obj" data-i18n="syn.obj"><b>Objectif :</b> concevoir et étudier un modèle de propulseur ionique adapté aux besoins d'un CubeSat.</p>
           </div>
           <div class="syn-col">
-            <p class="kicker">Bilan</p>
-            <p>Ce TIPE m'a fait entrevoir les difficultés qui entourent l'analyse des résultats d'une expérience, et l'importance de toujours confronter une étude pratique à un modèle théorique. Il a surtout nourri mon intérêt pour la propulsion spatiale et mon goût pour la recherche.</p>
-            <p>À la rentrée 2016, je rejoignais l'École Centrale de Nantes.</p>
+            <p class="kicker" data-i18n="syn.k2">Bilan</p>
+            <p data-i18n="syn.p1">Ce TIPE m'a fait entrevoir les difficultés qui entourent l'analyse des résultats d'une expérience, et l'importance de toujours confronter une étude pratique à un modèle théorique. Il a surtout nourri mon intérêt pour la propulsion spatiale et mon goût pour la recherche.</p>
+            <p data-i18n="syn.p2">À la rentrée 2016, je rejoignais l'École Centrale de Nantes.</p>
           </div>
         </div>
       </div>
@@ -385,24 +406,24 @@
       <div class="wrap">
         <div class="thanks">
           <div>
-            <p class="kicker">Merci</p>
-            <h2 class="h-lg">À celles et ceux qui m'ont aidé</h2>
+            <p class="kicker" data-i18n="thx.k">Merci</p>
+            <h2 class="h-lg" data-i18n="thx.h">À celles et ceux qui m'ont aidé</h2>
             <ul class="thanks-list">
-              <li><b>Gregory Emsellem</b>, fondateur et dirigeant de The Elwing Company</li>
-              <li><b>Nicolas Arcis</b>, chef du service propulsion et pyrotechnie pour les satellites au CNES</li>
+              <li data-i18n="thx.1"><b>Gregory Emsellem</b>, fondateur et dirigeant de The Elwing Company</li>
+              <li data-i18n="thx.2"><b>Nicolas Arcis</b>, chef du service propulsion et pyrotechnie pour les satellites au CNES</li>
               <li><b>François Terrillon</b></li>
-              <li><b>M. Gamelon, Mme Lechuga, Mme C. Aynié</b> et toute l'équipe du laboratoire de physique de La Martinière Monplaisir</li>
+              <li data-i18n="thx.4"><b>M. Gamelon, Mme Lechuga, Mme C. Aynié</b> et toute l'équipe du laboratoire de physique de La Martinière Monplaisir</li>
             </ul>
           </div>
           <div>
             <p class="kicker">Sources</p>
             <ul class="sources">
               <li>MIT Space Propulsion Laboratory, Massachusetts</li>
-              <li>Science Museum, Londres</li>
-              <li><i>CNES Mag</i> n° 63, octobre 2014, article de Nicolas Arcis</li>
-              <li>Wikipédia : multiplicateur de tension, radiomètre de Crookes</li>
+              <li data-i18n="src.2">Science Museum, Londres</li>
+              <li data-i18n="src.3"><i>CNES Mag</i> n° 63, octobre 2014, article de Nicolas Arcis</li>
+              <li data-i18n="src.4">Wikipédia : multiplicateur de tension, radiomètre de Crookes</li>
             </ul>
-            <a class="btn btn-ghost" href="https://propulseur-ionique.blogspot.com" target="_blank" rel="noopener">Le blog d'origine (2015)</a>
+            <a class="btn btn-ghost" href="https://propulseur-ionique.blogspot.com" target="_blank" rel="noopener" data-i18n="src.blog">Le blog d'origine (2015)</a>
           </div>
         </div>
       </div>
@@ -411,16 +432,16 @@
 
   <footer class="footer">
     <div class="wrap footer-inner">
-      <p><span class="brand-ion"></span>Paul Asquin · Propulseur ionique · TIPE 2014-2016</p>
-      <p class="credits">Textures de la Terre : NASA Visible Earth (Blue Marble, Black Marble). Modèles 3D, photos et relevés : Paul Asquin.</p>
+      <p><span class="brand-ion"></span><span data-i18n="foot.1">Paul Asquin · Propulseur ionique · TIPE 2014-2016</span></p>
+      <p class="credits" data-i18n="foot.2">Textures de la Terre : NASA Visible Earth (Blue Marble, Black Marble). Modèles 3D, photos et relevés : Paul Asquin.</p>
     </div>
   </footer>
 
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo agrandie" hidden>
-    <button class="lb-close" aria-label="Fermer">×</button>
-    <button class="lb-nav lb-prev" aria-label="Photo précédente">‹</button>
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo agrandie" data-i18n-aria="lb.aria" hidden>
+    <button class="lb-close" aria-label="Fermer" data-i18n-aria="lb.close">×</button>
+    <button class="lb-nav lb-prev" aria-label="Photo précédente" data-i18n-aria="lb.prev">‹</button>
     <figure><img alt=""><figcaption></figcaption></figure>
-    <button class="lb-nav lb-next" aria-label="Photo suivante">›</button>
+    <button class="lb-nav lb-next" aria-label="Photo suivante" data-i18n-aria="lb.next">›</button>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>

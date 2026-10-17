@@ -115,6 +115,12 @@ sub { font-size: .7em; }
 .nav-links a::after { content: ''; position: absolute; left: 0; right: 0; bottom: -6px; height: 1px; background: var(--ion); transform: scaleX(0); transition: transform .3s; }
 .nav-links a:hover, .nav-links a.active { color: var(--ink); }
 .nav-links a.active::after { transform: scaleX(1); }
+.lang-switch { display: inline-flex; gap: 2px; padding: 3px; margin-left: 22px; border: 1px solid var(--line-2); border-radius: 999px; }
+.lang-switch button { background: none; border: 0; color: var(--ink-3); font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; padding: 4px 9px; border-radius: 999px; cursor: pointer; transition: background .25s, color .25s; }
+.lang-switch button:hover { color: var(--ink); }
+.lang-switch button.on { background: rgba(111, 214, 255, .16); color: var(--plasma); }
+.slides-lang { font-size: 12.5px; color: var(--ink-3); margin: -6px 0 8px; }
+.slides-lang:empty { display: none; }
 .nav-toggle { display: none; background: none; border: 0; width: 36px; height: 36px; padding: 8px; cursor: pointer; }
 .nav-toggle span { display: block; height: 1.5px; background: var(--ink); margin: 6px 0; transition: transform .3s; }
 
@@ -432,6 +438,7 @@ blockquote { margin: 0 0 20px; font-family: var(--f-display); font-weight: 300; 
   .nav-links a { font-size: 18px; }
   .topnav.open .nav-links { transform: none; }
   .nav-toggle { display: block; }
+  .lang-switch { margin-left: auto; margin-right: 12px; }
   .topnav.open .nav-toggle span:first-child { transform: translateY(3.75px) rotate(45deg); }
   .topnav.open .nav-toggle span:last-child { transform: translateY(-3.75px) rotate(-45deg); }
   .panel { padding: 90px 18px; justify-content: center; min-height: 100vh; align-items: flex-end; padding-bottom: 12vh; }

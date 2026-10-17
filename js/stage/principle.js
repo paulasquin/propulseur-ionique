@@ -1,6 +1,7 @@
 // Act II — how a gridded electrostatic thruster works: gel, capillary needles,
 // Taylor cones, extraction and acceleration grids, ion beamlets and thrust.
 import * as THREE from 'three';
+import { t as tr } from '../i18n.js';
 import { createPlume, studioEnvironment, glowTexture, smooth, lerp, QUALITY, rand, frameOpposite } from './fx.js';
 
 const ION = {
@@ -285,13 +286,13 @@ export class PrincipleAct {
     // Labels.
     const L = labels;
     this.lab = {
-      gel: L.add('Gel ionique · eau salée + polyacrylate', new THREE.Vector3(1.9, -3.0, 0.4)),
-      needle: L.add('Aiguilles capillaires', new THREE.Vector3(1.0, -0.9, 0.0)),
-      cone: L.add('Cône de Taylor', new THREE.Vector3(0.1, 0.12, 0)),
-      extract: L.add("Grille d'extraction", new THREE.Vector3(2.3, Y_EXTRACT, 0), { side: 'left' }),
-      accel: L.add("Grille d'accélération · ±22 kV", new THREE.Vector3(2.3, Y_ACCEL, 0)),
-      beam: L.add("Faisceau d'ions · 347 km/s", new THREE.Vector3(0.6, 6.5, 0)),
-      thrust: L.add('Poussée : réaction', new THREE.Vector3(0.3, -6.4, 0), { warm: true }),
+      gel: L.add(tr('l.gel'), new THREE.Vector3(1.9, -3.0, 0.4)),
+      needle: L.add(tr('l.needles'), new THREE.Vector3(1.0, -0.9, 0.0)),
+      cone: L.add(tr('l.cone'), new THREE.Vector3(0.1, 0.12, 0)),
+      extract: L.add(tr('l.extract'), new THREE.Vector3(2.3, Y_EXTRACT, 0), { side: 'left' }),
+      accel: L.add(tr('l.accel', { sign: '±', kv: 22 }), new THREE.Vector3(2.3, Y_ACCEL, 0)),
+      beam: L.add(tr('l.beam', { ion: 'Cl⁻', v: 347 }), new THREE.Vector3(0.6, 6.5, 0)),
+      thrust: L.add(tr('l.reaction'), new THREE.Vector3(0.3, -6.4, 0), { warm: true }),
     };
 
     this.tmpA = new THREE.Vector3();
@@ -399,8 +400,8 @@ export class PrincipleAct {
     show('beam', 0.8, 1.01);
     show('thrust', 0.84, 1.01);
     this.labels.update(this.camera, innerWidth, innerHeight);
-    const accelText = `Grille d'accélération · ${gridPositive ? '+' : '−'}${this.kV.toFixed(0)} kV`;
-    const beamText = `Faisceau de ${ion.name} · ${Math.round(ve / 1000)} km/s`;
+    const accelText = tr('l.accel', { sign: gridPositive ? '+' : '−', kv: this.kV.toFixed(0) });
+    const beamText = tr('l.beam', { ion: ion.name, v: Math.round(ve / 1000) });
     if (accelText !== this.accelText) { this.accelText = accelText; this.lab.accel.el.querySelector('.s-text').textContent = accelText; }
     if (beamText !== this.beamText) { this.beamText = beamText; this.lab.beam.el.querySelector('.s-text').textContent = beamText; }
   }

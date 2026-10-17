@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { loadModel } from './models.js';
 import { studioEnvironment } from './stage/fx.js';
+import { t } from './i18n.js';
 
 const XRAY = new THREE.ShaderMaterial({
   uniforms: { uColor: { value: new THREE.Color('#6fd6ff') } },
@@ -33,10 +34,10 @@ function sectionMaterial(plane) {
 export function createViewer(container, { models, label }) {
   container.classList.add('viewer');
   container.innerHTML = `
-    <div class="viewer-modes"><div class="seg" role="radiogroup" aria-label="Mode d'affichage">
-      <button class="on" data-mode="solid">Plein</button><button data-mode="xray">Rayons X</button><button data-mode="cut">Coupe</button>
+    <div class="viewer-modes"><div class="seg" role="radiogroup" aria-label="${t('viewer.modes')}">
+      <button class="on" data-mode="solid">${t('viewer.solid')}</button><button data-mode="xray">${t('viewer.xray')}</button><button data-mode="cut">${t('viewer.cut')}</button>
     </div></div>
-    <span class="viewer-hint">glisser pour tourner</span>`;
+    <span class="viewer-hint">${t('viewer.hint')}</span>`;
   const canvas = document.createElement('canvas');
   container.prepend(canvas);
   canvas.setAttribute('aria-label', label);

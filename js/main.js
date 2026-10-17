@@ -4,11 +4,11 @@ import * as THREE from 'three';
 import { EXPERIMENTS, TIMELINE, RESULTS, ISP, MISSIONS, SLIDES, VIDEOS_PUBLIC } from './content.js';
 import { createChart } from './charts.js';
 import { exhaustVelocity } from './stage/principle.js';
+import { LANG, nf, t, applyStatic } from './i18n.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const nf = (v, d = 0) => v.toLocaleString('fr-FR', { minimumFractionDigits: d, maximumFractionDigits: d });
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 ScrollTrigger.config({ ignoreMobileResize: true });
@@ -44,7 +44,7 @@ function renderJournal() {
         <div class="thumb ${m.contain ? 'contain' : ''}"><img src="${m.src.replace(/(assets\/photos\/[^.]+)\.webp$/, '$1-s.webp')}" data-full="${m.src}" alt="${m.caption}" loading="lazy"></div>
         <figcaption>${m.caption}</figcaption>
       </figure>`).join('');
-    const videos = VIDEOS_PUBLIC && e.videos ? `<div class="entry-videos">Vidéos de l'expérience : ${e.videos.map((v, i) => `<a href="https://www.youtube.com/watch?v=${v}" target="_blank" rel="noopener">▶ vidéo ${i + 1}</a>`).join('')}</div>` : '';
+    const videos = VIDEOS_PUBLIC && e.videos ? `<div class="entry-videos">${t('journal.videos')} ${e.videos.map((v, i) => `<a href="https://www.youtube.com/watch?v=${v}" target="_blank" rel="noopener">▶ ${t('journal.video')} ${i + 1}</a>`).join('')}</div>` : '';
     return `
     <article class="entry ${e.num === 'I3D' ? 'print' : ''}" id="exp-${e.id}">
       <div class="entry-mark">
@@ -58,7 +58,7 @@ function renderJournal() {
         <div class="entry-grid">
           <div class="entry-text">
             ${e.body.map((p) => `<p>${p}</p>`).join('')}
-            <div class="entry-result"><b>Résultat</b>${e.result}</div>
+            <div class="entry-result"><b>${t('journal.result')}</b>${e.result}</div>
             ${e.limit ? `<p class="entry-limit">${e.limit}</p>` : ''}
           </div>
           <div class="entry-viz" data-viz='${JSON.stringify(e.viz)}'></div>
@@ -83,7 +83,7 @@ function renderResults() {
     <div class="isp-row ${r.kind}">
       <div class="isp-head"><span><b>${r.name}</b><small>${r.detail}</small></span><span class="isp-val">${nf(r.isp)} s</span></div>
       <div class="isp-bar"><i style="--w:${(lg(r.isp) * 100).toFixed(1)}%"></i></div>
-    </div>`).join('') + '<div class="isp-scale"><span>100 s</span><span>1 000 s</span><span>10 000 s</span><span>échelle logarithmique</span></div>';
+    </div>`).join('') + `<div class="isp-scale">${t('isp.scale').map((x) => `<span>${x}</span>`).join('')}</div>`;
 }
 
 function renderMissions() {
@@ -99,14 +99,14 @@ function renderMissions() {
 function setupSlides() {
   let n = 0;
   const thumbs = $('#slide-thumbs');
-  thumbs.innerHTML = SLIDES.map((s, i) => `<button aria-label="Diapositive ${s.n}" data-i="${i}"><img src="assets/slides/diapo-${String(s.n).padStart(2, '0')}.webp" alt="" loading="lazy"></button>`).join('');
+  thumbs.innerHTML = SLIDES.map((s, i) => `<button aria-label="${t('slide.thumb', { n: s.n })}" data-i="${i}"><img src="assets/slides/diapo-${String(s.n).padStart(2, '0')}.webp" alt="" loading="lazy"></button>`).join('');
   const img = $('#slide-img');
   const show = (i) => {
     n = (i + SLIDES.length) % SLIDES.length;
     const s = SLIDES[n];
     gsap.to(img, { opacity: 0, duration: 0.18, onComplete: () => {
       img.src = `assets/slides/diapo-${String(s.n).padStart(2, '0')}.webp`;
-      img.alt = `Diapositive ${s.n} : ${s.title}`;
+      img.alt = t('slide.alt', { n: s.n, title: s.title });
       img.onload = () => gsap.to(img, { opacity: 1, duration: 0.3 });
     } });
     $('#slide-n').textContent = String(s.n).padStart(2, '0');
@@ -192,7 +192,7 @@ async function setupViz() {
         const box = document.createElement('div');
         el.appendChild(box);
         const models = viz.model === 'croix' ? [{ name: 'croix', y: 46 }, { name: 'pied', y: 0 }] : [{ name: 'plateforme' }];
-        createViewer(box, { models, label: viz.model === 'croix' ? 'Modèle 3D du propulseur #2.1' : 'Modèle 3D de la plateforme de test' });
+        createViewer(box, { models, label: t(viz.model === 'croix' ? 'viewer.croix' : 'viewer.plateforme') });
       } else {
         const minis = await import('./minis.js');
         if (viz.type === 'jar') minis.jarMini(el, viz);
@@ -318,7 +318,7 @@ function bindActs({ stage, acts }) {
     volt.style.setProperty('--p', `${((kV - 0.5) / 29.5) * 100}%`);
     $('#lab-volt-out').textContent = `${nf(kV, 1)} kV`;
     const ve = exhaustVelocity(kV, ion);
-    $('#lab-ve').textContent = `${nf(Math.round(ve / 1000))} km/s`;
+    $('#lab-ve').textContent = `${nf(Math.floor(ve / 1000))} km/s`;
     $('#lab-isp').textContent = `${nf(Math.round(ve / 9.80665 / 100) * 100)} s`;
     $('#lab-f').textContent = `${nf((2 * 3.78) / ve * 1e6, 0)} µN`;
     pr.setVoltage(kV);
@@ -333,7 +333,7 @@ function bindActs({ stage, acts }) {
   updateLab();
   pr.onPolarity = (pol) => {
     $('.polarity').classList.toggle('neg', pol < 0);
-    $('#pol-label').textContent = pol > 0 ? '+22 kV · éjection de Cl⁻' : '−22 kV · éjection de Na⁺';
+    $('#pol-label').textContent = t(pol > 0 ? 'pol.plus' : 'pol.minus');
   };
 
   // Prototype read-outs and the synchronised measurement chart.
@@ -374,6 +374,7 @@ function heroIntro() {
 
 /* ---------------- boot ---------------- */
 async function boot() {
+  applyStatic();
   renderTimeline();
   renderJournal();
   renderResults();
@@ -411,6 +412,13 @@ async function boot() {
   $('#loader').classList.add('done');
   document.body.classList.remove('is-loading');
   lenis?.start();
+  // Coming back from the language switch: return to where the visitor was.
+  let back = null;
+  try { back = sessionStorage.getItem('scrollY'); sessionStorage.removeItem('scrollY'); } catch (e) { /* private mode */ }
+  if (back) {
+    if (lenis) lenis.scrollTo(+back, { immediate: true, force: true });
+    else window.scrollTo(0, +back);
+  }
   heroIntro();
 }
 

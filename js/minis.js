@@ -1,6 +1,8 @@
 // Small animated illustrations for the experiment journal: the bell jar
 // (battery, boiling water, ionic gel), the voltage cascade and the 7 kV booster.
 
+import { nf, t } from './i18n.js';
+
 const DPR = Math.min(devicePixelRatio || 1, 2);
 
 function whenVisible(el, start, stop) {
@@ -34,12 +36,12 @@ export function jarMini(container, { content, steps }) {
 
   const draw = (now) => {
     raf = requestAnimationFrame(draw);
-    const t = ((now - t0) / 1000) % CYCLE;
+    const time = ((now - t0) / 1000) % CYCLE;
     const W = c.width, H = c.height, u = Math.min(W, H) / 300;
     g.clearRect(0, 0, W, H);
     // Pressure schedule: hold at each step, then let the air back in.
-    const k = Math.min(steps.length - 1, Math.floor(t / 1.8));
-    const mbar = t > CYCLE - 1.2 ? 1013 : steps[k];
+    const k = Math.min(steps.length - 1, Math.floor(time / 1.8));
+    const mbar = time > CYCLE - 1.2 ? 1013 : steps[k];
     const vac = 1 - Math.log10(Math.max(mbar, 1)) / Math.log10(1013);
     const cx = W * 0.42, base = H * 0.78, jr = 92 * u, jh = 150 * u;
 
@@ -59,7 +61,7 @@ export function jarMini(container, { content, steps }) {
       g.fillText('9V', cx, by + 26 * u);
       // Thermometer read-out: stays flat.
       g.fillStyle = 'rgba(116,242,196,.9)'; g.font = `${11 * u}px JetBrains Mono, monospace`;
-      g.fillText('21,0 °C', cx, by - 18 * u);
+      g.fillText(`${nf(21, 1)} °C`, cx, by - 18 * u);
     } else {
       const lw = 110 * u, lh = 56 * u, lx = cx - lw / 2, ly = base - lh;
       g.strokeStyle = 'rgba(200,230,255,.5)'; g.lineWidth = 1.5 * u;
@@ -79,7 +81,7 @@ export function jarMini(container, { content, steps }) {
       }
       if (!gel) {
         // Boiling intensity follows the vacuum, then fades once degassed (first cycle only feel).
-        const boil = vac > 0.3 ? Math.min(1, (vac - 0.3) * 2.5) * (1 - Math.max(0, (t - 7) / 3)) : 0;
+        const boil = vac > 0.3 ? Math.min(1, (vac - 0.3) * 2.5) * (1 - Math.max(0, (time - 7) / 3)) : 0;
         bubbles.forEach((b) => {
           if (b.s > boil) return;
           b.y -= (0.004 + b.r * 0.01) * (0.5 + boil);
@@ -118,7 +120,8 @@ export function jarMini(container, { content, steps }) {
     g.beginPath(); g.arc(gx, gy, gr - 6 * u, a0, a); g.strokeStyle = '#6fd6ff'; g.stroke();
     g.beginPath(); g.moveTo(gx, gy); g.lineTo(gx + Math.cos(a) * (gr - 10 * u), gy + Math.sin(a) * (gr - 10 * u)); g.strokeStyle = '#fff'; g.lineWidth = 2 * u; g.stroke();
 
-    cap.innerHTML = `<span>pression <b>${mbar.toLocaleString('fr-FR')} mbar</b></span><span>${content === 'battery' ? 'pile : stable' : content === 'gel' ? 'gel : aucune ébullition' : mbar < 200 && t < 9 ? 'ébullition, dégazage' : 'solution dégazée'}</span>`;
+    const state = content === 'battery' ? t('mini.battery') : content === 'gel' ? t('mini.gel') : mbar < 200 && time < 9 ? t('mini.boiling') : t('mini.degassed');
+    cap.innerHTML = `<span>${t('mini.pressure')} <b>${nf(mbar)} mbar</b></span><span>${state}</span>`;
   };
   whenVisible(container, () => { if (!raf) { t0 = performance.now(); raf = requestAnimationFrame(draw); } }, () => { cancelAnimationFrame(raf); raf = 0; });
 }
@@ -127,7 +130,7 @@ export function jarMini(container, { content, steps }) {
 export function cascadeMini(container) {
   container.classList.add('cascade');
   container.innerHTML = `
-  <svg viewBox="0 0 480 300" role="img" aria-label="Multiplicateur de tension à deux étages">
+  <svg viewBox="0 0 480 300" role="img" aria-label="${t('mini.cascadeAria')}">
     <defs>
       <linearGradient id="cw-bar" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#3c4bd8"/><stop offset="1" stop-color="#d4f6ff"/></linearGradient>
       <filter id="cw-glow"><feGaussianBlur stdDeviation="2.5"/></filter>
@@ -145,15 +148,15 @@ export function cascadeMini(container) {
     <circle cx="60" cy="155" r="16" fill="#060a15" stroke="#6fd6ff" stroke-width="1.6"/>
     <path id="cw-wave" d="M50 160 V150 H60 V160 H70 V150" fill="none" stroke="#6fd6ff" stroke-width="1.6"/>
     <g font-family="JetBrains Mono, monospace" font-size="11" fill="#7c88a1">
-      <text x="14" y="122">±0,5 V</text><text x="112" y="56">C1</text><text x="252" y="56">C3</text><text x="172" y="268">C2</text><text x="332" y="268">C4</text>
-      <text x="392" y="256">sortie</text>
+      <text x="14" y="122">±${nf(0.5, 1)} V</text><text x="112" y="56">C1</text><text x="252" y="56">C3</text><text x="172" y="268">C2</text><text x="332" y="268">C4</text>
+      <text x="392" y="256">${t('mini.out')}</text>
     </g>
     <g class="cw-dots"></g>
     <rect x="448" y="70" width="18" height="160" rx="5" fill="rgba(255,255,255,.05)" stroke="#2a3550"/>
     <rect id="cw-fill" x="448" y="230" width="18" height="0" rx="5" fill="url(#cw-bar)"/>
     <text id="cw-out" x="457" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#d4f6ff">0 V</text>
   </svg>
-  <div class="seg cw-freq" role="radiogroup" aria-label="Fréquence du signal"><button class="on" data-f="hi">&gt; 500 Hz</button><button data-f="lo">20 Hz</button></div>`;
+  <div class="seg cw-freq" role="radiogroup" aria-label="${t('mini.freqAria')}"><button class="on" data-f="hi">&gt; 500 Hz</button><button data-f="lo">20 Hz</button></div>`;
   const seg = container.querySelector('.cw-freq');
   seg.style.cssText = 'position:absolute;left:16px;bottom:12px;';
   const paths = ['d1', 'd2', 'd3', 'd4'].map((id) => container.querySelector(`#${id}`));
@@ -194,7 +197,7 @@ export function cascadeMini(container) {
     const hgt = Math.max(0, Math.min(1, v / 2.2)) * 160;
     fill.setAttribute('height', hgt);
     fill.setAttribute('y', 230 - hgt);
-    out.textContent = `${v.toFixed(2).replace('.', ',')} V`;
+    out.textContent = `${nf(v, 2)} V`;
     for (let i = dots.length - 1; i >= 0; i--) {
       const d = dots[i];
       d.t += dt / (half * 0.9);
@@ -214,7 +217,7 @@ export function boostMini(container) {
   const { c, g } = canvasIn(container);
   const cap = document.createElement('div');
   cap.className = 'viz-caption';
-  cap.innerHTML = '<span>entrée <b>3 V</b></span><span>sortie <b>≈ 7 kV</b></span><span>diviseur : <b>630 – 636 V</b> attendus</span>';
+  cap.innerHTML = `<span>${t('mini.in')} <b>3 V</b></span><span>${t('mini.out')} <b>≈ 7 kV</b></span><span>${t('mini.divider')}</span>`;
   container.appendChild(cap);
   let raf = 0;
   const bolt = (x1, y1, x2, y2, depth, spread) => {
@@ -249,7 +252,7 @@ export function boostMini(container) {
       }
     }
     g.fillStyle = '#e8eef8'; g.font = `${500} ${15 * u}px Unbounded, sans-serif`; g.textAlign = 'center';
-    g.fillText('3 V  →  7 000 V', W / 2, H * 0.2);
+    g.fillText(`3 V  →  ${nf(7000)} V`, W / 2, H * 0.2);
   };
   whenVisible(container, () => { if (!raf) raf = requestAnimationFrame(draw); }, () => { cancelAnimationFrame(raf); raf = 0; });
 }

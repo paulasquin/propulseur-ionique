@@ -4,6 +4,7 @@
 import * as THREE from 'three';
 import { createPlume, studioEnvironment, smooth, lerp, clamp01, easeInOut, glowTexture, frameOpposite } from './fx.js';
 import { MEASURES } from '../measures.js';
+import { t as tr } from '../i18n.js';
 
 const MM = 0.1; // scene unit = 1 cm
 const P = 1 / 7; // one panel of the act
@@ -233,17 +234,17 @@ export class PrototypeAct {
     // Labels anchored on the model (millimetres in the mesh frame).
     const L = this.labels;
     this.lab = {
-      unit: L.add('Unité de propulsion · gel + grilles', new THREE.Vector3(68, 18, -10), { object: croix }),
-      pile: L.add('Logement pile 9 V', new THREE.Vector3(-44, 22, 44), { object: croix, side: 'left' }),
-      boost: L.add('Élévateur de tension', new THREE.Vector3(44, 22, 44), { object: croix }),
-      dome: L.add('Anse : suspension par fil ou chaîne aimantée', new THREE.Vector3(0, 84, 0), { object: croix }),
-      sign: L.add('« Propulseur ionique #2.1 · Paul Asquin 2015 »', new THREE.Vector3(-26, 70, -10), { object: croix, side: 'left' }),
-      glass: L.add('Verre de montre', new THREE.Vector3(3, 4.3, 0), { object: this.glass }),
-      needle: L.add('Aiguille', new THREE.Vector3(0.1, NEEDLE_L * 0.6, 0), { object: this.needle }),
-      brass: L.add('Masse en laiton', new THREE.Vector3(BRASS_R, BRASS_H * 0.6, 0), { object: this.brass }),
-      pied: L.add('Socle', new THREE.Vector3(58, 12, 0), { object: pied }),
-      contact: L.add('Contact verre-aiguille', new THREE.Vector3(0.12, NEEDLE_L, 0), { object: this.needle, side: 'left' }),
-      thrust: L.add('Poussée tangentielle × 4', new THREE.Vector3(68, 18, 40), { object: croix, warm: true }),
+      unit: L.add(tr('l.unit'), new THREE.Vector3(68, 18, -10), { object: croix }),
+      pile: L.add(tr('l.pile'), new THREE.Vector3(-44, 22, 44), { object: croix, side: 'left' }),
+      boost: L.add(tr('l.boost'), new THREE.Vector3(44, 22, 44), { object: croix }),
+      dome: L.add(tr('l.handle'), new THREE.Vector3(0, 84, 0), { object: croix }),
+      sign: L.add(tr('l.sign'), new THREE.Vector3(-26, 70, -10), { object: croix, side: 'left' }),
+      glass: L.add(tr('l.glass'), new THREE.Vector3(3, 4.3, 0), { object: this.glass }),
+      needle: L.add(tr('l.needle'), new THREE.Vector3(0.1, NEEDLE_L * 0.6, 0), { object: this.needle }),
+      brass: L.add(tr('l.brass'), new THREE.Vector3(BRASS_R, BRASS_H * 0.6, 0), { object: this.brass }),
+      pied: L.add(tr('l.base'), new THREE.Vector3(58, 12, 0), { object: pied }),
+      contact: L.add(tr('l.contact'), new THREE.Vector3(0.12, NEEDLE_L, 0), { object: this.needle, side: 'left' }),
+      thrust: L.add(tr('l.thrust'), new THREE.Vector3(68, 18, 40), { object: croix, warm: true }),
     };
     this.ready = true;
   }

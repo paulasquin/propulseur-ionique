@@ -1,5 +1,6 @@
 // Act I — a 2U CubeSat fires its ion thruster above the night side of the Earth.
 import * as THREE from 'three';
+import { t as tr } from '../i18n.js';
 import { createStars, createPlume, glowTexture, spaceEnvironment, smooth, lerp, clamp01, easeInOut } from './fx.js';
 
 // The sun sits just below the horizon ahead of the camera: an orbital sunrise.
@@ -391,7 +392,7 @@ export class OrbitAct {
 
     this.updateSun();
     this.hud ??= document.getElementById('hud-thr');
-    const label = thrust > 0.5 ? 'ON · 22 kV' : 'IGNITION';
+    const label = thrust > 0.5 ? 'ON · 22 kV' : tr('hud.ignition');
     if (this.hud && this.hud.textContent !== label) this.hud.textContent = label;
   }
 

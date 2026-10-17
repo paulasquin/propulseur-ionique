@@ -1,6 +1,7 @@
 // Small SVG line charts drawn from the original measurements, with a
 // progressive "pen" reveal and a hover read-out.
 import { MEASURES } from './measures.js';
+import { LOCALE, t } from './i18n.js';
 
 const NS = 'http://www.w3.org/2000/svg';
 const el = (tag, attrs = {}, parent) => {
@@ -9,7 +10,7 @@ const el = (tag, attrs = {}, parent) => {
   parent?.appendChild(e);
   return e;
 };
-const fmt = (v, d = 2) => v.toLocaleString('fr-FR', { minimumFractionDigits: d, maximumFractionDigits: d });
+const fmt = (v, d = 2) => v.toLocaleString(LOCALE, { minimumFractionDigits: d, maximumFractionDigits: d });
 
 const PALETTE = {
   ion: '#6fd6ff', ion2: '#8f86ff', cl: '#74f2c4', na: '#ffb45e', thrust: '#ff6b3d', dim: '#5d6b88',
@@ -17,33 +18,33 @@ const PALETTE = {
 
 export const CHARTS = {
   conductivity: () => ({
-    x: { label: 'concentration en sel (g/L)', min: 200, max: 410, ticks: [200, 250, 300, 350, 400], unit: 'g/L', d: 0 },
-    y: { label: 'conductivité (S/m)', min: 20.6, max: 24.2, ticks: [21, 22, 23, 24], unit: 'S/m', d: 2 },
-    series: [{ name: 'Mesures du 20 mars 2015', color: PALETTE.cl, data: MEASURES.conductivity.filter(([x]) => x >= 200), dots: true }],
-    notes: [{ x: 228, y: 21.15, text: 'pente ≈ 0,039 S/m par g/L' }, { x: 368, y: 23.95, text: 'saturation' }],
+    x: { label: t('ch.concentration'), min: 200, max: 410, ticks: [200, 250, 300, 350, 400], unit: 'g/L', d: 0 },
+    y: { label: t('ch.conductivity'), min: 20.6, max: 24.2, ticks: [21, 22, 23, 24], unit: 'S/m', d: 2 },
+    series: [{ name: t('ch.condSeries'), color: PALETTE.cl, data: MEASURES.conductivity.filter(([x]) => x >= 200), dots: true }],
+    notes: [{ x: 228, y: 21.15, text: t('ch.slope') }, { x: 368, y: 23.95, text: t('ch.saturation') }],
   }),
   extraction: () => ({
-    x: { label: 'temps (s)', min: 0, max: 2600, ticks: [0, 500, 1000, 1500, 2000, 2500], unit: 's', d: 0 },
-    y: { label: 'conductivité (S/m)', min: 15.5, max: 17.7, ticks: [15.5, 16, 16.5, 17, 17.5], unit: 'S/m', d: 2 },
-    series: [{ name: '+5 000 V sur le ménisque, 17 juin 2015', color: PALETTE.ion, data: MEASURES.extraction }],
-    notes: [{ x: 1250, y: 15.65, text: 'baisse : des ions Cl⁻ extraits ?' }, { x: 2050, y: 17.55, text: 'remontée inexpliquée' }],
+    x: { label: t('ch.time'), min: 0, max: 2600, ticks: [0, 500, 1000, 1500, 2000, 2500], unit: 's', d: 0 },
+    y: { label: t('ch.conductivity'), min: 15.5, max: 17.7, ticks: [15.5, 16, 16.5, 17, 17.5], unit: 'S/m', d: 2 },
+    series: [{ name: t('ch.extrSeries'), color: PALETTE.ion, data: MEASURES.extraction }],
+    notes: [{ x: 1250, y: 15.65, text: t('ch.extrDrop') }, { x: 2050, y: 17.55, text: t('ch.extrRise') }],
   }),
   friction: () => ({
-    x: { label: 'temps (s)', min: 0, max: 190, ticks: [0, 30, 60, 90, 120, 150, 180], unit: 's', d: 1 },
-    y: { label: 'fréquence de rotation (tr/s)', min: 0, max: 0.8, ticks: [0, 0.2, 0.4, 0.6, 0.8], unit: 'tr/s', d: 3 },
+    x: { label: t('ch.time'), min: 0, max: 190, ticks: [0, 30, 60, 90, 120, 150, 180], unit: 's', d: 1 },
+    y: { label: t('ch.freq'), min: 0, max: 0.8, ticks: [0, 0.2, 0.4, 0.6, 0.8], unit: t('ch.turns'), d: 3 },
     series: [
       ...MEASURES.friction.crookes.slice(0, 2).map((d, i) => ({ name: `Crookes ${i + 1}`, color: ['#6fd6ff', '#8f86ff'][i], data: d, dots: true })),
       ...MEASURES.friction.supermag.map((d, i) => ({ name: `Supermag ${i + 1}`, color: ['#ffb45e', '#ff8a4a'][i], data: d, dots: true })),
     ],
   }),
   thrust: () => ({
-    x: { label: 'temps (s)', min: 0, max: 200, ticks: [0, 40, 80, 120, 160, 200], unit: 's', d: 1 },
-    y: { label: 'fréquence de rotation (tr/s)', min: 0, max: 0.27, ticks: [0, 0.05, 0.1, 0.15, 0.2, 0.25], unit: 'tr/s', d: 3 },
+    x: { label: t('ch.time'), min: 0, max: 200, ticks: [0, 40, 80, 120, 160, 200], unit: 's', d: 1 },
+    y: { label: t('ch.freq'), min: 0, max: 0.27, ticks: [0, 0.05, 0.1, 0.15, 0.2, 0.25], unit: t('ch.turns'), d: 3 },
     series: [
-      { name: 'Propulseurs allumés (essai 7)', color: PALETTE.thrust, data: MEASURES.thrust.with[1], dots: true },
-      { name: 'Propulseurs allumés (essai 3)', color: '#ffb45e', data: MEASURES.thrust.with[0], dots: true },
-      { name: 'Propulseurs éteints (essai 5)', color: PALETTE.ion, data: MEASURES.thrust.without[0], dots: true, dash: '5 4' },
-      { name: 'Propulseurs éteints (essai 6)', color: '#8f86ff', data: MEASURES.thrust.without[1], dots: true, dash: '5 4' },
+      { name: t('ch.with', { n: 7 }), color: PALETTE.thrust, data: MEASURES.thrust.with[1], dots: true },
+      { name: t('ch.with', { n: 3 }), color: '#ffb45e', data: MEASURES.thrust.with[0], dots: true },
+      { name: t('ch.without', { n: 5 }), color: PALETTE.ion, data: MEASURES.thrust.without[0], dots: true, dash: '5 4' },
+      { name: t('ch.without', { n: 6 }), color: '#8f86ff', data: MEASURES.thrust.without[1], dots: true, dash: '5 4' },
     ],
   }),
 };
@@ -67,7 +68,7 @@ export function createChart(container, key) {
   });
   cfg.x.ticks.forEach((v) => {
     el('line', { x1: sx(v), x2: sx(v), y1: m.t, y2: H - m.b }, grid);
-    el('text', { x: sx(v), y: H - m.b + 16, 'text-anchor': 'middle' }, axis).textContent = v.toLocaleString('fr-FR');
+    el('text', { x: sx(v), y: H - m.b + 16, 'text-anchor': 'middle' }, axis).textContent = v.toLocaleString(LOCALE);
   });
   el('text', { class: 'axis-label', x: m.l + iw, y: H - 6, 'text-anchor': 'end' }, svg).textContent = cfg.x.label;
   el('text', { class: 'axis-label', x: 12, y: m.t + ih / 2, transform: `rotate(-90 12 ${m.t + ih / 2})`, 'text-anchor': 'middle' }, svg).textContent = cfg.y.label;
