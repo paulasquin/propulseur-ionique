@@ -174,7 +174,7 @@ main { position: relative; z-index: 2; }
 
 /* ---------- hero ---------- */
 .panel-hero { min-height: 100vh; min-height: 100svh; align-items: flex-end; padding-bottom: clamp(70px, 12vh, 140px); }
-.panel-hero::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 70% 60% at 0% 100%, rgba(3, 5, 11, .7), transparent 70%); }
+.panel-hero::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 60% 55% at 0% 100%, rgba(3, 5, 11, .82), transparent 72%); }
 .hero-content { position: relative; }
 .hero-content { max-width: 760px; }
 .eyebrow { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 22px; font-family: var(--f-mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-2); }
@@ -183,8 +183,9 @@ main { position: relative; z-index: 2; }
 .hero-title { font-family: var(--f-display); font-weight: 300; font-size: clamp(44px, 8.2vw, 136px); white-space: nowrap; line-height: .9; letter-spacing: -.045em; margin: 0 0 26px; text-transform: lowercase; }
 .ht-line { display: block; overflow: hidden; padding-bottom: .06em; }
 .ht-word { display: inline-block; }
-.ht-glow { font-weight: 500; background: linear-gradient(95deg, #fff 0%, var(--plasma) 25%, var(--ion) 60%, var(--ion-2) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 28px rgba(111, 214, 255, .45)); }
-.hero-sub { max-width: 560px; font-size: clamp(17px, 1.45vw, 20px); color: var(--ink-2); font-weight: 300; margin-bottom: 30px; }
+.ht-glow { font-weight: 500; background: linear-gradient(95deg, #fff 0%, var(--plasma) 25%, var(--ion) 60%, var(--ion-2) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero-sub { max-width: 560px; font-size: clamp(17px, 1.45vw, 20px); color: var(--ink); font-weight: 300; margin-bottom: 30px; text-shadow: 0 1px 2px rgba(0, 0, 0, .9), 0 0 24px rgba(3, 5, 11, .95); }
+.hero-kpis, .eyebrow { text-shadow: 0 1px 2px rgba(0, 0, 0, .8), 0 0 18px rgba(3, 5, 11, .9); }
 .hero-kpis { display: flex; flex-wrap: wrap; gap: 14px 40px; margin: 0 0 34px; }
 .hero-kpis div { border-left: 1px solid var(--line-2); padding-left: 14px; }
 .hero-kpis dt { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); }
