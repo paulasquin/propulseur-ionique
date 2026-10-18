@@ -237,6 +237,11 @@ const STATIC_EN = {
   'mis.k': 'Already flying',
   'mis.h': 'From Deep Space 1<br><em>to constellations.</em>',
   'mis.lead': 'First used as the main propulsion of a probe in 1998, electric propulsion now equips thousands of satellites. In 2016, I closed my presentation with the missions it could enable; ten years later, they have become a reality.',
+  'film.k': 'The film',
+  'film.h': 'The project in thirty seconds',
+  'film.p': "Ten years on, the prototype comes back to life. Every shot of this short film is rendered from this site's 3D scenes: the CubeSat in orbit, ions torn from salt water, the prototype printed layer by layer, the four thrusters firing and the long spiral out into space.",
+  'film.play': 'Play the project film',
+  'film.cap': 'I built an ion thruster · 30 s',
   'mit.k': 'The inspiration',
   'mit.h': 'The MIT micro-thrusters',
   'mit.p': "My test bench borrowed an idea from MIT's Space Propulsion Laboratory: ionic-liquid electrospray thrusters mounted on a rotating structure whose speed is tracked. Theirs floated on magnetic levitation; mine rested on a needle.",
@@ -304,6 +309,12 @@ export function applyStatic() {
   document.querySelectorAll('[data-i18n-alt]').forEach((el) => {
     const v = STATIC_EN[el.dataset.i18nAlt];
     if (v !== undefined) el.setAttribute('alt', v);
+  });
+  document.querySelectorAll('[data-yt-en]').forEach((el) => {
+    const img = el.querySelector('img');
+    img.src = img.src.replace(el.dataset.yt, el.dataset.ytEn);
+    el.dataset.yt = el.dataset.ytEn;
+    el.dataset.title = el.dataset.titleEn;
   });
   // In English the glowing word comes first: "Ion thruster".
   const words = document.querySelectorAll('[data-i18n-title] .ht-word');
